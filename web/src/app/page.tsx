@@ -25,13 +25,14 @@ export default function LandingPage() {
               <Button size="lg" variant="default" className="">Get Entension</Button>
             </div>
             <div className="flex justify-center">
-              <Image
+              {/* <Image
                 src="/placeholder.svg?height=400&width=600"
                 alt="YouTube Power Tools: Unlimited Watch Later"
                 width={600}
                 height={400}
                 className="rounded-lg shadow-lg"
-              />
+              /> */}
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/eatTUQt5ens?si=AvSSAXQ1sK2ubm2L" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin"></iframe>
             </div>
           </div>
         </div>
