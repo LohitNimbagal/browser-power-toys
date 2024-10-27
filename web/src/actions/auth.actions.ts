@@ -24,7 +24,7 @@ export async function signInWithEmail(formData: FormData) {
 
         cookies().set("ypt-session", session.secret, {
             httpOnly: true,
-            sameSite: "strict",
+            // sameSite: "strict",
             expires: new Date(session.expire),
             secure: true,
             path: "/",
