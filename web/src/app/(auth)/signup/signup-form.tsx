@@ -23,6 +23,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { signUpWithEmail } from "@/actions/auth.actions"
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -45,10 +46,10 @@ export default function SignUpForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Here you would typically handle the sign-up process
-        console.log(values)
-    }
+    // function onSubmit(values: z.infer<typeof formSchema>) {
+    //     // Here you would typically handle the sign-up process
+    //     console.log(values)
+    // }
 
     return (
         <div className="flex h-screen w-full items-center justify-center px-4">
@@ -61,7 +62,7 @@ export default function SignUpForm() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <form action={signUpWithEmail} className="space-y-4">
                             <FormField
                                 control={form.control}
                                 name="name"

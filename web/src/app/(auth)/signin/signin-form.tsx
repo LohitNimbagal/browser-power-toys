@@ -22,6 +22,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { signInWithEmail } from "@/actions/auth.actions"
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -38,10 +39,10 @@ export default function SignInForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Here you would typically handle the sign-in process
-        console.log(values)
-    }
+    // function onSubmit(values: z.infer<typeof formSchema>) {
+    //     // Here you would typically handle the sign-in process
+    //     console.log(values)
+    // }
 
     return (
         <div className="flex h-screen w-full items-center justify-center px-4">
@@ -54,7 +55,7 @@ export default function SignInForm() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <form action={signInWithEmail} className="space-y-4">
                             <FormField
                                 control={form.control}
                                 name="email"
