@@ -1,0 +1,54 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Power Tools Extension",
+    "description": "manifest.json description",
+    "version": "0.5",
+    "icons": {
+        "16": "icon/16.png",
+        "32": "icon/32.png",
+        "48": "icon/48.png",
+        "96": "icon/96.png",
+        "128": "icon/128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "sidePanel",
+        "storage",
+        "tabs",
+        "cookies",
+        "notifications"
+    ],
+    "action": {},
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "icon/save-image.png"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://www.youtube.com/*",
+        "http://localhost:3000/*",
+        "https://youtube-power-tools.vercel.app/"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "side_panel": {
+        "default_path": "sidepanel.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.youtube.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}

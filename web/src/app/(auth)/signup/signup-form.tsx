@@ -135,12 +135,12 @@ export default function SignUpForm() {
                     </p>
                 </CardFooter>
                 <CardContent>
-                    <Button variant="outline" className="w-full">
+                    {/* <Button variant="outline" className="w-full">
                         Sign Up with Google
-                    </Button>
+                    </Button> */}
                     <div className="mt-4 text-center text-sm">
                         Already have an account?{" "}
-                        <Link href="#" className="underline">
+                        <Link href="/signin" className="underline">
                             Sign in
                         </Link>
                     </div>

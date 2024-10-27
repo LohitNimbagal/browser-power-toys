@@ -1,9 +1,11 @@
 'use server'
 
-import { createAdminClient } from "@/server/appwrite";
+import { createAdminClient, createSessionClient } from "@/server/appwrite";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { ID } from "node-appwrite";
+import { getCurrentUser } from "./user.actions";
+import { redirect } from "next/navigation";
 
 export async function signInWithEmail(formData: FormData) {
 
@@ -39,6 +41,8 @@ export async function signInWithEmail(formData: FormData) {
         //     message: error.message
         // }
     }
+
+    redirect('/console')
 }
 
 export async function signUpWithEmail(formData: FormData) {
@@ -75,4 +79,12 @@ export async function signUpWithEmail(formData: FormData) {
         //     message: error.message
         // }
     }
+}
+
+export async function signOut() {
+
+    await cookies().delete('ypt-session')
+
+    redirect('/signin')
+
 }
