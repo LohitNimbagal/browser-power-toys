@@ -5,7 +5,7 @@ function addIconToVideos() {
     videos.forEach((video) => {
         if (!video.querySelector(".youtube-icon-extension")) {
             const icon = document.createElement("img");
-            const imageUrl = chrome.runtime.getURL("icon/save-image.png");
+            const imageUrl = chrome.runtime.getURL("icons/save-image.png");
             icon.src = imageUrl;
             icon.alt = "YouTube Icon";
             icon.className = "youtube-icon-extension";
@@ -20,6 +20,17 @@ function addIconToVideos() {
             icon.style.opacity = "90%";
             icon.style.background = "black";
             icon.style.borderRadius = '20%';
+            icon.style.transition = "transform 0.2s ease-in-out, opacity 0.2s ease-in-out"; // Smooth transition for scaling and opacity
+
+            // Set cursor pointer and scale on hover
+            icon.onmouseover = () => {
+                icon.style.cursor = "pointer";
+                icon.style.transform = "scale(1.1)"; // Slightly scale up
+            };
+
+            icon.onmouseout = () => {
+                icon.style.transform = "scale(1)"; // Reset scale on mouse out
+            };
 
             // Click event for saving video
             icon.addEventListener("click", async (event) => {
