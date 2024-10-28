@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import { ModeToggle } from '@/components/ui/mode-toggle'
 import { Blocks } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -16,8 +15,8 @@ export default function Header() {
 
                 <nav className="flex gap-3">
                     <ul className="flex items-center space-x-4">
-                        <li><a href="#features" className="text-gray-600 hover:text-red-600 transition-colors">Features</a></li>
-                        <li><a href="#pricing" className="text-gray-600 hover:text-red-600 transition-colors">Pricing</a></li>
+                        <li><a href="#features" className="text-gray-800">Features</a></li>
+                        <li><a href="#pricing" className="text-gray-800">Pricing</a></li>
                         <li>
                             <Button asChild>
                                 <Link href='/signin'>
@@ -26,8 +25,6 @@ export default function Header() {
                             </Button>
                         </li>
                     </ul>
-
-                    <ModeToggle />
                 </nav>
 
             </div>

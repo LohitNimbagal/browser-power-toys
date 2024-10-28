@@ -1,22 +1,94 @@
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle, HelpCircle, Infinity, Clock, Zap } from "lucide-react"
+import { CheckCircle, HelpCircle, Infinity, Clock, Zap, YoutubeIcon } from "lucide-react"
+import Image from 'next/image'
 
 export default function page() {
     return (
         <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50">
 
-            <section className="bg-red-600 text-white py-20 w-full">
+            <section className="bg-gray-100 py-20 w-full">
                 <div className="container max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div className="text-center md:text-left">
-                            <h1 className="text-4xl font-bold mb-4">Unlimited Watch Later for YouTube Power Users</h1>
+                            <h1 className="text-4xl font-bold mb-4 leading-[3rem]">Unlimited Watch Later for
+                                <span className='flex items-center'>
+                                    <span className='bg-red-500 p-2 rounded-md m-1 mr-2 w-fit flex items-center gap-2 text-white'>
+                                        <YoutubeIcon className='w-12 h-12' />
+                                        YouTube
+                                    </span>
+                                    Power Users
+                                </span>
+                            </h1>
                             <p className="text-xl mb-8">Never lose track of videos you want to watch later.</p>
-                            <Button size="lg" variant="default" className="">Get Entension</Button>
+                            <Button size="lg" variant="default" className="">Get Extension</Button>
                         </div>
-                        <div className="flex justify-center">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/p_FFgo7eYEQ?si=u7kZZzjKsRe4EqyB" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                        <div className="w-full h-full grid grid-cols-2 gap-2">
+                            <div className='relative'>
+                                <Image
+                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
+                                    width={1080}
+                                    height={900}
+                                    className="object-cover rounded-md aspect-video w-72"
+                                    alt="extension installed image"
+                                />
+                                <Image
+                                    src={'/save-image.png'}
+                                    width={600}
+                                    height={600}
+                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
+                                    alt="extension installed image"
+                                />
+                            </div>
+                            <div className='relative'>
+                                <Image
+                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
+                                    width={1080}
+                                    height={900}
+                                    className="object-cover rounded-md aspect-video w-72"
+                                    alt="extension installed image"
+                                />
+                                <Image
+                                    src={'/save-image.png'}
+                                    width={600}
+                                    height={600}
+                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
+                                    alt="extension installed image"
+                                />
+                            </div>
+                            <div className='relative'>
+                                <Image
+                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
+                                    width={1080}
+                                    height={900}
+                                    className="object-cover rounded-md aspect-video w-72"
+                                    alt="extension installed image"
+                                />
+                                <Image
+                                    src={'/save-image.png'}
+                                    width={600}
+                                    height={600}
+                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
+                                    alt="extension installed image"
+                                />
+                            </div>
+                            <div className='relative'>
+                                <Image
+                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
+                                    width={1080}
+                                    height={900}
+                                    className="object-cover rounded-md aspect-video w-72"
+                                    alt="extension installed image"
+                                />
+                                <Image
+                                    src={'/save-image.png'}
+                                    width={600}
+                                    height={600}
+                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
+                                    alt="extension installed image"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +135,7 @@ export default function page() {
                 </div>
             </section>
 
-            <section className="py-20 w-full  bg-gray-100">
+            <section className="py-20 w-full bg-gray-100">
                 <div className="container max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center mb-12">Our Innovative Solution</h2>
                     <div className="max-w-3xl mx-auto space-y-8">
@@ -112,7 +184,7 @@ export default function page() {
                 </div>
             </section>
 
-            <section id="features" className="py-20 w-full  bg-white">
+            <section id="features" className="py-20 w-full bg-white">
                 <div className="container max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center mb-12">Powerful Features for Power Users</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -147,7 +219,7 @@ export default function page() {
                 </div>
             </section>
 
-            <section id="pricing" className="py-20 w-full  bg-gray-100">
+            <section id="pricing" className="py-20 w-full bg-gray-100">
                 <div className="container max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
                     <div className="max-w-md mx-auto">
@@ -188,7 +260,7 @@ export default function page() {
                 </div>
             </section>
 
-            <section className="bg-red-600 text-white py-20 w-full ">
+            <section className="bg-white py-20 w-full ">
                 <div className="container max-w-7xl mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-4">Ready to Supercharge Your YouTube Experience?</h2>
                     <p className="text-xl mb-8">Join thousands of power users who never miss a video they want to watch later.</p>

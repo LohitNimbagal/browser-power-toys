@@ -1,11 +1,8 @@
 
-import { Button } from "@/components/ui/button"
-import type { Metadata } from "next";
-import { Blocks, Youtube } from "lucide-react"
 import Link from "next/link";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { Card } from "@/components/ui/card";
 import Image from "next/image";
+import { Youtube } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function page() {
   return (
@@ -14,16 +11,16 @@ export default function page() {
 
       <div className="w-full flex flex-col items-center justify-center">
 
-        <section className="py-20 w-full">
+        <section className="py-20 w-full bg-gray-100">
           <div className="container max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div className="text-center md:text-left">
                 <h1 className="text-4xl font-bold mb-4 font-montserrat tracking-wide">The Ultimate Toolkit for <br /> <span className="text-[#6c2ced]">Super Users</span></h1>
                 <p className="text-xl mb-8 font-roboto tracking-wider">Upgrade your workflow with essential tools tailored for serious internet users. <br /> Say goodbye to limitations and hello to powerful possibilities.</p>
-                <Button size="lg" variant="default" className="">Get Entension</Button>
+                <Button size="lg" variant="default" className="">Get Extension</Button>
               </div>
               <div className="flex justify-center">
-                <Image 
+                <Image
                   src={'/extention-icon.png'}
                   width={500}
                   height={250}
@@ -35,7 +32,7 @@ export default function page() {
           </div>
         </section>
 
-        <section id="features" className="py-20 w-full">
+        <section id="features" className="py-20 w-full bg-white">
           <div className="container max-w-7xl mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">Powerful Features for Power Users</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

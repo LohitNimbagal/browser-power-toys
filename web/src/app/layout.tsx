@@ -1,7 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat, Roboto } from 'next/font/google'
-import "./globals.css";
-import { ThemeProvider } from "@/components/there-provider";
 
 const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -33,12 +32,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${montserrat.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-        >
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
