@@ -24,7 +24,7 @@ export async function signInWithEmail(formData: FormData) {
             password
         )
 
-        cookies().set("ypt-session", session.secret, {
+        cookies().set("bpt-session", session.secret, {
             httpOnly: true,
             // sameSite: "strict",
             expires: new Date(session.expire),
@@ -62,7 +62,7 @@ export async function signUpWithEmail(formData: FormData) {
 
         const session = await account.createEmailPasswordSession(email, password);
 
-        cookies().set("ypt-session", session.secret, {
+        cookies().set("bpt-session", session.secret, {
             httpOnly: true,
             sameSite: "strict",
             secure: true,
@@ -83,7 +83,7 @@ export async function signUpWithEmail(formData: FormData) {
 
 export async function signOut() {
 
-    await cookies().delete('ypt-session')
+    await cookies().delete('bpt-session')
 
     redirect('/signin')
 

@@ -15,7 +15,7 @@ const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 export async function GET(request: NextRequest) {
 
     const storedState = cookies().get('oauth_state')?.value;
-    const session = cookies().get('ypt-session')?.value;
+    const session = cookies().get('bpt-session')?.value;
 
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');

@@ -29,7 +29,7 @@ export async function createSessionClient() {
         .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
         .setProject(process.env.APPWRITE_PROJECT_ID!);
 
-    const session = await cookies().get("ypt-session")
+    const session = await cookies().get("bpt-session")
 
     if (!session) return null
 

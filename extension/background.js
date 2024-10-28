@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     if (request.action === "getAccessToken") {
 
-        chrome.cookies.get({ url: url, name: "ypt-session" }, (cookie) => {
+        chrome.cookies.get({ url: url, name: "bpt-session" }, (cookie) => {
 
             if (cookie) {
                 sendResponse({ accessToken: cookie.value });
