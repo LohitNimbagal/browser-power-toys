@@ -12,7 +12,6 @@ export default function page() {
 
     <>
 
-
       <div className="w-full flex flex-col items-center justify-center">
 
         <section className="py-20 w-full">
