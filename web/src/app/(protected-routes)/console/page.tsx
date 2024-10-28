@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { Query } from 'node-appwrite';
 import React from 'react'
 import PlaylistComp from './playlist-comp';
-import { Youtube } from 'lucide-react';
+import { Blocks, Youtube } from 'lucide-react';
 import { getUserChannelInfo, getPlaylists, refreshAccessTokenAndUpdateDB } from '@/server/youtube';
 import { signOut } from '@/actions/auth.actions';
 
@@ -66,10 +66,9 @@ export default async function page() {
             <>
                 <header className="border-b">
                     <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                            <Youtube className="h-8 w-8 text-red-600" />
-                            <span className="text-xl font-bold">YouTube Power Tools</span>
-                        </div>
+                        <Link href={'/'} className="flex items-center space-x-2">
+                            <Blocks className="h-8 w-8 text-[#6c2ced]" />
+                        </Link>
                         <form action={signOut}>
                             <Button type='submit'>
                                 Sign Out

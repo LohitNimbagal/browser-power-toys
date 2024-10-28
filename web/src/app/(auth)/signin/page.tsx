@@ -7,7 +7,7 @@ export default async function page() {
 
     const user = await getCurrentUser()
 
-    if (user) redirect('/')
+    if (user) redirect('/console')
 
     return <SignInForm />
 }
