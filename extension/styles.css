@@ -1,8 +1,19 @@
 .youtube-icon-extension {
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    z-index: 99;
+    width: 30px;
+    height: 30px;
+    opacity: 90%;
+    background: black;
+    border-radius: 20%;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    /* Smooth transition for scaling and opacity */
 }
 
 .youtube-icon-extension:hover {
-    transform: scale(1.2);
+    cursor: pointer;
+    transform: scale(1.1);
+    /* Slightly scale up */
 }

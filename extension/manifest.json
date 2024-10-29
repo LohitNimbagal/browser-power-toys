@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Browser Power Toys Extension",
     "description": "Extention for Power Users",
-    "version": "0.5",
+    "version": "0.5.1",
     "icons": {
         "16": "icons/icon16.png",
         "19": "icons/icon19.png",
@@ -44,10 +44,16 @@
     "content_scripts": [
         {
             "matches": [
-                "*://www.youtube.com/*"
+                "*://*.youtube.com/*"
             ],
             "js": [
+                "utils/toast/toast.js",
+                "utils/error/error.js",
                 "content.js"
+            ],
+            "css": [
+                "utils/toast/toast.css",
+                "styles.css"
             ]
         }
     ]
