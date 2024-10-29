@@ -7,7 +7,7 @@ export default async function page() {
 
     const betaTesting = process.env.BETA_TESTING
 
-    if (betaTesting) {
+    if (betaTesting === 'testing') {
         redirect('/waitinglist')
     }
 

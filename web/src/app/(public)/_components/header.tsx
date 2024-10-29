@@ -6,8 +6,8 @@ import React from 'react'
 
 export default function Header() {
 
-    const betaTesting = process.env.BETA_TESTING!
-
+    const betaTesting = process.env.BETA_TESTING
+    
     return (
 
         <header className="z-10 bg-background">
@@ -22,7 +22,7 @@ export default function Header() {
 
                 <nav className="flex gap-3">
                     {
-                        betaTesting ? (
+                        betaTesting === 'testing' ? (
                             <Button asChild>
                                 <Link href='/waitinglist'>
                                     Join Waiting List
