@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
-    const url = 'http://localhost:3000/'
+    const url = 'https://browserpowertoys.xyz/'
 
     if (request.action === "getAccessToken") {
 
@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 sendResponse({ accessToken: cookie.value });
             } else {
 
-                const youtubePowerToolsUrl = "http://localhost:3000"; // Replace with the actual URL
+                const youtubePowerToolsUrl = "https://browserpowertoys.xyz/"; // Replace with the actual URL
 
                 chrome.tabs.create({ url: youtubePowerToolsUrl }, (newTab) => {
                     console.log("Opened YouTube PowerTools site:", newTab);

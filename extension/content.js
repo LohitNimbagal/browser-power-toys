@@ -1,6 +1,6 @@
 function addIconToVideos() {
     const videos = document.querySelectorAll("ytd-rich-item-renderer");
-    const url = 'http://localhost:3000';
+    const url = 'https://browserpowertoys.xyz';
 
     videos.forEach((video) => {
         if (!video.querySelector(".youtube-icon-extension")) {
@@ -71,7 +71,7 @@ function addIconToVideos() {
 
                                 if (apiResponse.ok) {
                                     console.log('Video added successfully to Playlist:', data.savedVideoInfo.addedToPlaylist);
-                                    showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`)
+                                    showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`);
                                 } else {
                                     console.error('Failed to add video:', data.error || 'Unknown error');
                                     showToast(`Failed to add video: ${data.error || 'Unknown error'}`);
@@ -104,7 +104,8 @@ observer.observe(document.body, { childList: true, subtree: true });
 window.onload = addIconToVideos;
 
 // Function to show toast notification with "Undo" option
-function showToast(message, actionText = "Undo") {
+function showToast(message) {
+    console.log("Toast function called with message:", message); // Debugging line
     const toast = document.createElement("div");
     toast.className = "toast";
 
@@ -113,18 +114,8 @@ function showToast(message, actionText = "Undo") {
     messageSpan.textContent = message;
     toast.appendChild(messageSpan);
 
-    // Action button
-    const actionButton = document.createElement("button");
-    actionButton.textContent = actionText;
-    actionButton.className = "toast-action";
-    actionButton.onclick = () => {
-        actionCallback();
-        document.body.removeChild(toast); // Remove toast on action click
-    };
-    toast.appendChild(actionButton);
-
     // Append toast to document body
-    document.body.appendChild(toast);
+    document.body.appendChild(toast); // Ensure this line is included
 
     // Inject toast styles if not already present
     if (!document.querySelector('#toastStyles')) {
@@ -177,11 +168,14 @@ function showToast(message, actionText = "Undo") {
     }
 
     // Show the toast with animation
-    setTimeout(() => toast.classList.add("show"), 100);
+    setTimeout(() => {
+        toast.classList.add("show");
+        console.log("Toast now shown:", toast); // Debugging line
+    }, 100);
 
     // Auto-hide the toast after 3 seconds
     setTimeout(() => {
         toast.classList.add("fade-out");
-        setTimeout(() => document.body.removeChild(toast), 500);
+        setTimeout(() => document.body.removeChild(toast), 1000); // Increased from 500 to 1000ms
     }, 3000);
 }

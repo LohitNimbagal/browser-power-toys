@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Montserrat, Roboto } from 'next/font/google'
+import { Montserrat, Roboto, Inter as FontSans } from 'next/font/google'
 
 const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -12,6 +12,11 @@ const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700'],
   variable: '--roboto',
   subsets: ['latin']
+})
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
 })
 
 export const metadata: Metadata = {
@@ -30,7 +35,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="2XhCdH264JXK91qzzDi6-nRDidcVzyEfJPJ4PULnugs" />
       </head>
       <body
-        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased`}
+        className={`${roboto.variable} ${montserrat.variable} ${fontSans.variable} font-sans antialiased `}
       >
         {children}
       </body>

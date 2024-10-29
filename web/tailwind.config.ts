@@ -12,6 +12,7 @@ const config: Config = {
 			fontFamily: {
 				roboto: ["var(--roboto)"],
 				montserrat: ["var(--montserrat)"],
+				sans: ["var(--font-sans)"],
 			},
 			colors: {
 				background: 'hsl(var(--background))',
