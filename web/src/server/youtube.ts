@@ -72,6 +72,18 @@ export async function getUserChannelInfo(accessToken: string) {
         mine: true,
     });
 
-    return channelInfo
+    if (channelInfo.data.items && channelInfo.data.items.length > 0) {
+        const channel = channelInfo.data.items[0];
+        const userInfo = {
+            title: channel.snippet?.title,
+            channelId: channel.id,
+            customUrl: channel.snippet?.customUrl,
+            imageUrl: channel.snippet?.thumbnails?.default?.url,
+        };
+
+        return userInfo;
+    } else {
+        return null
+    }
 
 }

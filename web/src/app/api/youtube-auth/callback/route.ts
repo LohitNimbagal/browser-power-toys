@@ -1,4 +1,5 @@
 
+import { getUserChannelInfo } from '@/server/youtube';
 import { google } from 'googleapis';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -32,7 +33,8 @@ export async function GET(request: NextRequest) {
     try {
 
         const { tokens } = await oauth2Client.getToken(code as string);
-        oauth2Client.setCredentials(tokens);
+
+        const userChannelInfo = await getUserChannelInfo(tokens.access_token!)
 
         const redirectUrl = `${baseUrl}/console`;
 
@@ -58,6 +60,7 @@ export async function GET(request: NextRequest) {
         );
 
         if (userYoutubeTokens.total === 0) {
+
             await databases.createDocument(
                 process.env.APPWRITE_DATABASE_ID!,
                 process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
@@ -65,7 +68,11 @@ export async function GET(request: NextRequest) {
                 accessToken: tokens.access_token,
                 refreshToken: tokens.refresh_token,
                 expiresAt: tokens.expiry_date?.toString(),
-                userId: user?.$id
+                userId: user?.$id,
+                channelTitle: userChannelInfo?.title,
+                channelId: userChannelInfo?.channelId,
+                customUrl: userChannelInfo?.customUrl,
+                imageUrl: userChannelInfo?.imageUrl,
             })
 
             response.cookies.delete('oauth_state');

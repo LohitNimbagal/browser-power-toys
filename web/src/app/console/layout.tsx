@@ -11,7 +11,7 @@ export default function ConsoleLayout({ children }: { children: ReactNode }) {
         >
             <div className={"flex flex-col min-h-screen"}>
                 <ConsoleHeader />
-                <main className="flex-grow flex items-start justify-center p-4">
+                <main className="flex-grow flex items-start justify-start p-4">
                     {children}
                 </main>
                 {/* <ConsoleFooter /> */}

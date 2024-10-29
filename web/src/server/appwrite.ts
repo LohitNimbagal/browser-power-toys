@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { Client, Account, Databases } from "node-appwrite";
+import { Client, Account, Databases, Query } from "node-appwrite";
 import { cookies } from "next/headers";
 import { google } from 'googleapis';
 import { redirect } from 'next/navigation';
@@ -31,7 +31,7 @@ export async function createSessionClient() {
 
     const session = await cookies().get("bpt-session")
 
-    if (!session) return null
+    if (!session) redirect('/signin')
 
     client.setSession(session.value);
 
@@ -43,4 +43,26 @@ export async function createSessionClient() {
             return new Databases(client);
         },
     };
+}
+
+export async function getCurrentUserYouTubeInfo(userId: string) {
+
+    const { databases } = await createSessionClient()
+
+    const userYouTubeInfo = await databases.listDocuments(
+        process.env.APPWRITE_DATABASE_ID!,
+        process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
+        [Query.equal("userId", userId)]
+    );
+
+    if (userYouTubeInfo.total === 1) {
+        return {
+            success: true,
+            userYouTubeInfo: userYouTubeInfo.documents[0]
+        }
+    } else return {
+        success: false,
+        userYouTubeInfo: null
+    }
+
 }
