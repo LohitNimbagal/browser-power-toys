@@ -21,27 +21,21 @@ export default function Header() {
                 </div>
 
                 <nav className="flex gap-3">
-                    <ul className="flex items-center space-x-4">
-                        <li><a href="#features" className="text-gray-800">Features</a></li>
-                        <li><a href="#pricing" className="text-gray-800">Pricing</a></li>
-                        <li>
-                            {
-                                betaTesting ? (
-                                    <Button asChild>
-                                        <Link href='/waitinglist'>
-                                            Join Waiting List
-                                        </Link>
-                                    </Button>
-                                ) : (
-                                    <Button asChild>
-                                        <Link href='/signin'>
-                                            Sign In
-                                        </Link>
-                                    </Button>
-                                )
-                            }
-                        </li>
-                    </ul>
+                    {
+                        betaTesting ? (
+                            <Button asChild>
+                                <Link href='/waitinglist'>
+                                    Join Waiting List
+                                </Link>
+                            </Button>
+                        ) : (
+                            <Button asChild>
+                                <Link href='/signin'>
+                                    Sign In
+                                </Link>
+                            </Button>
+                        )
+                    }
                 </nav>
 
             </div>

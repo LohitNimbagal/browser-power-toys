@@ -17,7 +17,11 @@ export default function page() {
               <div className="text-center md:text-left">
                 <h1 className="text-4xl font-bold mb-4 font-montserrat tracking-wide">The Ultimate Toolkit for <br /> <span className="text-[#6c2ced]">Super Users</span></h1>
                 <p className="text-xl mb-8 font-roboto tracking-wider">Upgrade your workflow with essential tools tailored for serious internet users. <br /> Say goodbye to limitations and hello to powerful possibilities.</p>
-                <Button size="lg" variant="default" className="">Get Extension</Button>
+                <Button size="lg" className="bg-[#6c2ced] hover:bg-[#6c2ced]/90" asChild>
+                  <Link href={'/waitinglist'}>
+                    Get Extension
+                  </Link>
+                </Button>
               </div>
               <div className="flex justify-center">
                 <Image
@@ -37,15 +41,18 @@ export default function page() {
             <h2 className="text-3xl font-bold text-center mb-12">Powerful Features for Power Users</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-              <Link href={'/tools/youtube'}>
-                <div className="flex flex-col items-center text-center p-6 bg-red-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <div className="bg-red-100 p-3 rounded-full mb-4">
-                    <Youtube className="h-8 w-8 text-red-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2 text-gray-800">Youtube Power Tools</h3>
-                  <p className="text-gray-600">Save as many videos as you want without worrying about limits. <br /> Your watch later list, your way.</p>
+              <div className="flex flex-col items-center text-center p-6 bg-red-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div className="bg-red-100 p-3 rounded-full mb-4">
+                  <Youtube className="h-8 w-8 text-red-600" />
                 </div>
-              </Link>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800">Youtube Power Tools</h3>
+                <p className="text-gray-600">Save as many videos as you want without worrying about limits. <br /> Your watch later list, your way.</p>
+                <Button className="mt-4 bg-red-600 hover:bg-red-600/90 w-full">
+                  <Link href={'/tools/youtube'}>
+                    Learn More
+                  </Link>
+                </Button>
+              </div>
 
               <div className="relative flex flex-col items-center text-center p-6 bg-blue-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <div className="bg-blue-100 p-3 rounded-full mb-4">

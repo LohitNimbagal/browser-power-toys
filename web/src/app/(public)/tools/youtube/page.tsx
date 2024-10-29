@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, HelpCircle, Infinity, Clock, Zap, YoutubeIcon } from "lucide-react"
 import Image from 'next/image'
+import YouTubeSaveButton from './_components/save-button'
 
 export default function page() {
+
     return (
         <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50">
 
@@ -33,13 +35,7 @@ export default function page() {
                                     className="object-cover rounded-md aspect-video w-72"
                                     alt="extension installed image"
                                 />
-                                <Image
-                                    src={'/save-image.png'}
-                                    width={600}
-                                    height={600}
-                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
-                                    alt="extension installed image"
-                                />
+                                <YouTubeSaveButton />
                             </div>
                             <div className='relative'>
                                 <Image
@@ -49,13 +45,7 @@ export default function page() {
                                     className="object-cover rounded-md aspect-video w-72"
                                     alt="extension installed image"
                                 />
-                                <Image
-                                    src={'/save-image.png'}
-                                    width={600}
-                                    height={600}
-                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
-                                    alt="extension installed image"
-                                />
+                                <YouTubeSaveButton />
                             </div>
                             <div className='relative'>
                                 <Image
@@ -65,13 +55,7 @@ export default function page() {
                                     className="object-cover rounded-md aspect-video w-72"
                                     alt="extension installed image"
                                 />
-                                <Image
-                                    src={'/save-image.png'}
-                                    width={600}
-                                    height={600}
-                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
-                                    alt="extension installed image"
-                                />
+                                <YouTubeSaveButton />
                             </div>
                             <div className='relative'>
                                 <Image
@@ -81,13 +65,7 @@ export default function page() {
                                     className="object-cover rounded-md aspect-video w-72"
                                     alt="extension installed image"
                                 />
-                                <Image
-                                    src={'/save-image.png'}
-                                    width={600}
-                                    height={600}
-                                    className="absolute opacity-80 left-2 top-2 w-8 h-8 hover:cursor-pointer"
-                                    alt="extension installed image"
-                                />
+                                <YouTubeSaveButton />
                             </div>
                         </div>
                     </div>
