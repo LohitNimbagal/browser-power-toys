@@ -47,50 +47,57 @@ function addIconToVideos() {
                     }
                 }
 
-                if (videoId) {
-                    chrome.runtime.sendMessage({ action: "getAccessToken" }, async (response) => {
-                        if (response.accessToken) {
-                            const accessToken = response.accessToken;
-                            try {
-                                const playlistId = "PLuQs4_nl236Ekf9fExRDOyakP9hwflKpz";
-
-                                const apiResponse = await fetch(`${url}/api/youtube/save-video`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${accessToken}`
-                                    },
-                                    body: JSON.stringify({
-                                        playlistId: playlistId,
-                                        videoId: videoId
-                                    }),
-                                    credentials: 'include'
-                                });
-
-                                const data = await apiResponse.json();
-
-                                if (apiResponse.ok) {
-                                    console.log('Video added successfully to Playlist:', data.savedVideoInfo.addedToPlaylist);
-                                    showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`);
-                                } else {
-                                    console.error('Failed to add video:', data.error || 'Unknown error');
-                                    showToast(`Failed to add video: ${data.error || 'Unknown error'}`);
-                                }
-
-                            } catch (error) {
-                                console.error('An error occurred while adding video:', error);
-                                showToast("An error occurred while adding the video.");
-                            }
-
-                        } else {
-                            console.error('Error getting access token:', response.error);
-                            showToast("Error getting access token.");
-                        }
-                    });
-                } else {
-                    console.error('Video ID not found');
+                if (!videoId) {
                     showToast("Video ID not found.");
+                    console.error('Video ID not found');
+                    return;
                 }
+
+                chrome.runtime.sendMessage({ action: "getAccessToken" }, async (response) => {
+
+                    if (!response || !response.accessToken) {
+                        console.error('Error getting access token:', response ? response.error : "No response");
+                        showToast("Error getting access token. Redirecting to login...");
+
+                        // Open a new link to the login page
+                        window.open('https://browserpowertoys/signin', '_blank');  // Replace with your actual login URL
+                        return;
+                    }
+
+                    const accessToken = response.accessToken;
+
+                    try {
+                        // Make API request to save the video
+                        const apiResponse = await fetch(`${url}/api/youtube/save-video`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${accessToken}`
+                            },
+                            body: JSON.stringify({
+                                videoId: videoId
+                            }),
+                            credentials: 'include'
+                        });
+
+                        const data = await apiResponse.json();
+
+                        console.log(data);
+
+                        if (apiResponse.ok) {
+                            console.log('Video added successfully to Playlist:', data.savedVideoInfo.addedToPlaylist);
+                            showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`);
+                        } else {
+                            console.error('Failed to add video:', data.error || 'Unknown error');
+                            handleApiError(data);  // Use the error handling function for specific error codes
+                        }
+
+                    } catch (error) {
+                        console.error('An error occurred while adding video:', error);
+                        showToast("An error occurred while adding the video.");
+                    }
+                });
+
             });
 
             video.appendChild(icon);
@@ -103,9 +110,8 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 window.onload = addIconToVideos;
 
-// Function to show toast notification with "Undo" option
+// show toast
 function showToast(message) {
-    console.log("Toast function called with message:", message); // Debugging line
     const toast = document.createElement("div");
     toast.className = "toast";
 
@@ -179,3 +185,47 @@ function showToast(message) {
         setTimeout(() => document.body.removeChild(toast), 1000); // Increased from 500 to 1000ms
     }, 3000);
 }
+
+// error handling
+function handleApiError(errorData) {
+    switch (errorData.code) {
+        case 'VIDEO_ID_MISSING':
+            showToast('VIDEO_ID_MISSING');
+            break;
+        case 'AUTH_HEADER_INVALID':
+            showToast('AUTH_HEADER_INVALID');
+            break;
+        case 'SESSION_TOKEN_MISSING':
+            showToast('SESSION_TOKEN_MISSING');
+            window.open('https://browserpowertoys/signin', '_blank');
+            break;
+        case 'USER_NOT_FOUND':
+            showToast('USER_NOT_FOUND');
+            window.open('https://browserpowertoys/signup', '_blank');
+            break;
+        case 'BETA_ACCESS_REQUIRED':
+            showToast('BETA_ACCESS_REQUIRED');
+            window.open('https://browserpowertoys/waitinglist', '_blank');
+            break;
+        case 'YPT_ACCESS_REQUIRED':
+            showToast('YPT_ACCESS_REQUIRED');
+            window.open('https://browserpowertoys/tools/youtube', '_blank');
+            break;
+        case 'YOUTUBE_TOKENS_NOT_FOUND':
+            showToast('YOUTUBE_TOKENS_NOT_FOUND');
+            window.open('https://browserpowertoys/console', '_blank');
+            break;
+        case 'TOKEN_REFRESH_FAILED':
+            showToast('TOKEN_REFRESH_FAILED');
+            window.open('https://browserpowertoys/console', '_blank');
+            break;
+        case 'DB_QUERY_FAILED':
+            showToast('DB_QUERY_FAILED');
+            break;
+        case 'UNKNOWN_ERROR':
+        default:
+            showToast(`UNKNOWN_ERROR: ${errorData.error || 'Unknown error'}`);
+            break;
+    }
+}
+

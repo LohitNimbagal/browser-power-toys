@@ -75,17 +75,30 @@ export async function POST(req: NextRequest) {
 
     const { videoId } = await req.json();
 
+    if (!videoId) {
+        return NextResponse.json({
+            error: 'Failed to get video info',
+            code: 'VIDEO_ID_MISSING'
+        }, { status: 400 });
+    }
+
     const authHeader = req.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return NextResponse.json({ error: 'Failed to get authHeader' }, { status: 500 });
+        return NextResponse.json({
+            error: 'Authorization header missing or invalid',
+            code: 'AUTH_HEADER_INVALID'
+        }, { status: 401 });
     }
 
     const sessionFromExtension = authHeader.split(' ')[1];
 
     if (!sessionFromExtension) {
-        console.log('No access token found');
-        return NextResponse.json({ error: 'Failed to get session from Extension' }, { status: 500 });
+        console.log('No user session found');
+        return NextResponse.json({
+            error: 'Session token missing in authorization header',
+            code: 'SESSION_TOKEN_MISSING'
+        }, { status: 401 });
     }
 
     const client = new Client()
@@ -94,35 +107,60 @@ export async function POST(req: NextRequest) {
 
     client.setSession(sessionFromExtension);
 
-    const account = new Account(client)
+    const account = new Account(client);
     const databases = new Databases(client);
 
-    const user = await account.get()
+    const user = await account.get();
 
-    if (!videoId) {
-        return NextResponse.json({ error: 'Failed to get video info' }, { status: 500 });
+    if (!user) {
+        console.log('No user found');
+        return NextResponse.json({
+            error: 'No user associated with this session',
+            code: 'USER_NOT_FOUND'
+        }, { status: 404 });
+    }
+
+    if (!user.labels.includes('betaUser')) {
+        return NextResponse.json({
+            error: 'User lacks required beta access',
+            code: 'BETA_ACCESS_REQUIRED'
+        }, { status: 403 });
+    }
+
+    if (!user.labels.includes('ypt')) {
+        return NextResponse.json({
+            error: 'User lacks required YPT authorization',
+            code: 'YPT_ACCESS_REQUIRED'
+        }, { status: 403 });
     }
 
     try {
-
+        
         const userYoutubeTokens = await databases.listDocuments(
             process.env.APPWRITE_DATABASE_ID!,
             process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
             [Query.equal("userId", user.$id)]
         );
 
+        if (!userYoutubeTokens.documents.length) {
+            return NextResponse.json({
+                error: 'No YouTube tokens found for the user',
+                code: 'YOUTUBE_TOKENS_NOT_FOUND'
+            }, { status: 404 });
+        }
+
         let { accessToken, refreshToken, expiresAt } = userYoutubeTokens.documents[0];
         const isTokenExpired = Date.now() >= Number(expiresAt);
 
         if (isTokenExpired) {
             try {
-
                 oauth2Client.setCredentials({ refresh_token: refreshToken });
                 const { credentials } = await oauth2Client.refreshAccessToken();
+
                 accessToken = credentials.access_token!;
                 expiresAt = (credentials.expiry_date ?? Date.now()).toString();
 
-                // Update Appwrite with new access token and expiration date
+                // Update Appwrite with the new access token and expiration date
                 await databases.updateDocument(
                     process.env.APPWRITE_DATABASE_ID!,
                     process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
@@ -130,22 +168,43 @@ export async function POST(req: NextRequest) {
                     { accessToken, expiresAt }
                 );
 
-                const savedVideoInfo = await addToPlaylist(accessToken, videoId)
+                const savedVideoInfo = await addToPlaylist(accessToken, videoId);
 
-                return NextResponse.json({ success: true, savedVideoInfo: savedVideoInfo })
+                return NextResponse.json({
+                    success: true,
+                    savedVideoInfo: savedVideoInfo
+                });
 
             } catch (error) {
                 console.error("Error refreshing token:", error);
-                return NextResponse.json({ error: 'Failed to refresh access token' });
+                return NextResponse.json({
+                    error: 'Failed to refresh access token',
+                    code: 'TOKEN_REFRESH_FAILED'
+                }, { status: 500 });
             }
         }
 
-        const savedVideoInfo = await addToPlaylist(accessToken, videoId)
+        const savedVideoInfo = await addToPlaylist(accessToken, videoId);
 
-        return NextResponse.json({ success: true, savedVideoInfo: savedVideoInfo })
+        return NextResponse.json({
+            success: true,
+            savedVideoInfo: savedVideoInfo
+        });
 
     } catch (error) {
         console.error("Error handling request:", error);
-        return NextResponse.json({ error: 'An error occurred' });
+
+        if (error) {
+            return NextResponse.json({
+                error: 'Database query error or invalid input',
+                code: 'DB_QUERY_FAILED'
+            }, { status: 500 });
+        }
+
+        return NextResponse.json({
+            error: 'An unexpected error occurred',
+            code: 'UNKNOWN_ERROR'
+        }, { status: 500 });
     }
+
 }
