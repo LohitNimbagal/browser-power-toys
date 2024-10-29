@@ -33,7 +33,7 @@ export default function UserAvatarMenu({ user }: { user: { name: string, email: 
                     <Avatar className="h-8 w-8">
                         <AvatarImage src="/placeholder-avatar.jpg" />
                         <AvatarFallback>
-                            <User className='size-5 text-primary' />
+                            <User className='size-5' />
                         </AvatarFallback>
                     </Avatar>
                 </Button>

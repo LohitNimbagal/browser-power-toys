@@ -38,7 +38,7 @@ export default function page() {
 
         <section id="features" className="py-20 w-full bg-white">
           <div className="container max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Powerful Features for Power Users</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Powerful Tools for Power Users</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
               <div className="flex flex-col items-center text-center p-6 bg-red-50 rounded-lg shadow-md">
@@ -47,9 +47,9 @@ export default function page() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">Youtube Power Tools</h3>
                 <p className="text-gray-600">Save as many videos as you want without worrying about limits. <br /> Your watch later list, your way.</p>
-                <Button asChild className="mt-4 bg-red-600 hover:bg-red-600/90 w-full">
+                <Button asChild variant={'youtube'} className="mt-4 w-full">
                   <a href={'/tools/youtube'}>
-                    Learn More
+                    Read More
                   </a>
                 </Button>
               </div>

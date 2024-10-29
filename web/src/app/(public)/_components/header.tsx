@@ -1,13 +1,14 @@
+import { getCurrentUser } from '@/actions/user.actions'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Blocks } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-export default function Header() {
+export default async function Header() {
 
-    const betaTesting = process.env.BETA_TESTING
-    
+    const user = await getCurrentUser()
+
     return (
 
         <header className="z-10 bg-background">
@@ -21,18 +22,23 @@ export default function Header() {
                 </div>
 
                 <nav className="flex gap-3">
+                    <Button variant={'outline'} className='text-primary hover:text-primary' asChild>
+                        <a href='/tools'>
+                            Explore Tools
+                        </a>
+                    </Button>
                     {
-                        betaTesting === 'testing' ? (
+                        user ? (
                             <Button asChild>
-                                <Link href='/waitinglist'>
-                                    Join Waiting List
-                                </Link>
+                                <a href='/console'>
+                                    Console
+                                </a>
                             </Button>
                         ) : (
                             <Button asChild>
-                                <Link href='/signin'>
+                                <a href='/signin'>
                                     Sign In
-                                </Link>
+                                </a>
                             </Button>
                         )
                     }

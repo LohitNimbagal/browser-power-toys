@@ -7,7 +7,7 @@ export default function ConsoleLayout({ children }: { children: ReactNode }) {
     return (
         <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="dark"
         >
             <div className={"flex flex-col min-h-screen"}>
                 <ConsoleHeader />
