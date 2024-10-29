@@ -15,8 +15,8 @@ export default function page() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div className="text-center md:text-left">
                             <h1 className="text-4xl font-bold mb-4 leading-[3rem]">Unlimited Watch Later for
-                                <span className='flex items-center'>
-                                    <span className='bg-red-500 p-2 rounded-md m-1 mr-2 w-fit flex items-center gap-2 text-white'>
+                                <span className='flex items-center flex-col md:flex-row'>
+                                    <span className='bg-youtube p-2 rounded-md m-1 mr-2 w-fit flex items-center gap-2 text-white'>
                                         <YoutubeIcon className='w-12 h-12' />
                                         YouTube
                                     </span>
@@ -24,7 +24,7 @@ export default function page() {
                                 </span>
                             </h1>
                             <p className="text-xl mb-8">Never lose track of videos you want to watch later.</p>
-                            <Button size="lg" variant="default" className="">Get Extension</Button>
+                            <Button size="lg" variant="youtube">Get Started</Button>
                         </div>
                         <div className="w-full h-full grid grid-cols-2 gap-2">
                             <div className='relative'>
@@ -78,8 +78,8 @@ export default function page() {
                     <div className="max-w-3xl mx-auto space-y-8">
                         <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
                             <CardContent className="p-6">
-                                <div className="flex flex-col items-center text-center md:text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-red-100 p-3 rounded-full">
+                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
+                                    <div className="bg-red-100 p-3 w-fit rounded-full">
                                         <HelpCircle className="w-6 h-6 text-red-600" />
                                     </div>
                                     <div>
@@ -93,8 +93,8 @@ export default function page() {
                         </Card>
                         <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg bg-red-50 border-red-200">
                             <CardContent className="p-6">
-                                <div className="flex flex-col items-center text-center md:text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-red-100 p-3 rounded-full">
+                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
+                                    <div className="bg-red-100 p-3 w-fit rounded-full">
                                         <HelpCircle className="w-6 h-6 text-red-600" />
                                     </div>
                                     <div>
@@ -119,8 +119,8 @@ export default function page() {
                     <div className="max-w-3xl mx-auto space-y-8">
                         <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
                             <CardContent className="p-6">
-                                <div className="flex flex-col items-center text-center md:text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-green-100 p-3 rounded-full">
+                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
+                                    <div className="bg-green-100 p-3 w-fit rounded-full">
                                         <CheckCircle className="w-6 h-6 text-green-600" />
                                     </div>
                                     <div>
@@ -142,8 +142,8 @@ export default function page() {
                         </Card>
                         <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg bg-green-50 border-green-200">
                             <CardContent className="p-6">
-                                <div className="flex flex-col items-center text-center md:text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-green-100 p-3 rounded-full">
+                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
+                                    <div className="bg-green-100 p-3 w-fit rounded-full">
                                         <CheckCircle className="w-6 h-6 text-green-600" />
                                     </div>
                                     <div>
@@ -189,8 +189,8 @@ export default function page() {
                         </div>
                     </div>
                     <div className="mt-12 text-center">
-                        <p className="text-lg text-gray-600 flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-red-600 mr-2" />
+                        <p className="text-lg text-gray-600 flex flex-wrap items-center justify-center gap-2">
+                            <Zap className="w-5 h-5 text-red-600" />
                             More power user features coming soon!
                         </p>
                     </div>
@@ -202,7 +202,7 @@ export default function page() {
                     <h2 className="text-3xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
                     <div className="max-w-md mx-auto">
                         <Card className="overflow-hidden">
-                            <div className="bg-red-600 p-6 text-white text-center">
+                            <div className="bg-youtube p-6 text-white text-center">
                                 <h3 className="text-2xl font-bold mb-2">Lifetime Access</h3>
                                 <p className="text-5xl font-bold">$10</p>
                                 <p className="text-sm mt-2">One-time payment</p>
@@ -211,7 +211,7 @@ export default function page() {
                                 <ul className="space-y-4">
                                     <li className="flex items-center">
                                         <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Unlimited video storage</span>
+                                        <span>Unlimited Watch Later</span>
                                     </li>
                                     <li className="flex items-center">
                                         <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
@@ -223,17 +223,16 @@ export default function page() {
                                     </li>
                                     <li className="flex items-center">
                                         <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Access to all future features</span>
+                                        <span>Access to all future Youtube Power Tools features</span>
                                     </li>
-                                    <li className="flex items-center">
+                                    {/* <li className="flex items-center">
                                         <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
                                         <span>Priority customer support</span>
-                                    </li>
+                                    </li> */}
                                 </ul>
-                                <Button className="w-full mt-6" size="lg">Get Lifetime Access Now</Button>
+                                <Button className="w-full mt-6" variant={'youtube'} size="lg">Get Lifetime Access Now</Button>
                             </CardContent>
                         </Card>
-                        {/* <p className="text-center mt-4 text-sm text-gray-600">30-day money-back guarantee. No questions asked.</p> */}
                     </div>
                 </div>
             </section>
@@ -242,7 +241,7 @@ export default function page() {
                 <div className="container max-w-7xl mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-4">Ready to Supercharge Your YouTube Experience?</h2>
                     <p className="text-xl mb-8">Join thousands of power users who never miss a video they want to watch later.</p>
-                    <Button size="lg" variant="default" >Get YouTube Power Tools Now</Button>
+                    <Button size="lg" variant="youtube" >Get YouTube Power Tools Now</Button>
                 </div>
             </section>
         </div>

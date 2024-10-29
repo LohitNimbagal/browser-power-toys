@@ -32,6 +32,10 @@ const config: Config = {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+				youtube: {
+					DEFAULT: 'hsl(var(--youtube))',
+					foreground: 'hsl(var(--primary-foreground))'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
