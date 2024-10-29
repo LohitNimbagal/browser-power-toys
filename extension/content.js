@@ -71,9 +71,7 @@ function addIconToVideos() {
 
                                 if (apiResponse.ok) {
                                     console.log('Video added successfully to Playlist:', data.savedVideoInfo.addedToPlaylist);
-                                    showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`, "Undo", () => {
-                                        console.log("Undo clicked"); // You can add undo logic here
-                                    });
+                                    showToast(`Saved to ${data.savedVideoInfo.addedToPlaylist}`)
                                 } else {
                                     console.error('Failed to add video:', data.error || 'Unknown error');
                                     showToast(`Failed to add video: ${data.error || 'Unknown error'}`);
