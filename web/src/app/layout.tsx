@@ -30,7 +30,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="2XhCdH264JXK91qzzDi6-nRDidcVzyEfJPJ4PULnugs" />
       </head>
       <body
-        className={`${roboto.variable} ${montserrat.variable} antialiased`}
+        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased`}
       >
         {children}
       </body>

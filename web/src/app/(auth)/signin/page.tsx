@@ -5,6 +5,12 @@ import { redirect } from 'next/navigation'
 
 export default async function page() {
 
+    const betaTesting = process.env.BETA_TESTING
+
+    if (betaTesting) {
+        redirect('/waitinglist')
+    }
+
     const user = await getCurrentUser()
 
     if (user) redirect('/console')
