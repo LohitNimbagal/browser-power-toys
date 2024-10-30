@@ -1,6 +1,8 @@
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat, Roboto, Inter as FontSans } from 'next/font/google'
+import { Toaster } from "@/components/ui/toaster";
 
 const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -38,6 +40,7 @@ export default function RootLayout({
         className={`${roboto.variable} ${montserrat.variable} ${fontSans.variable} font-sans antialiased `}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

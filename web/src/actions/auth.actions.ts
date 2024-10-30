@@ -32,17 +32,16 @@ export async function signInWithEmail(formData: FormData) {
             path: "/",
         });
 
-        revalidatePath('/signin')
+        return (
+            { success: true, message: 'Sign In Successfull' }
+        )
 
     } catch (error: any) {
         console.log(error);
-        // return {
-        //     status: "error",
-        //     message: error.message
-        // }
+        return (
+            { success: false, message: error.type }
+        )
     }
-
-    redirect('/console')
 }
 
 export async function signUpWithEmail(formData: FormData) {
@@ -70,14 +69,15 @@ export async function signUpWithEmail(formData: FormData) {
             path: "/",
         });
 
-        revalidatePath('/signup')
+        return (
+            { success: true, message: 'Sign Up Successfull' }
+        )
 
     } catch (error: any) {
         console.log(error);
-        // return {
-        //     status: 'error',
-        //     message: error.message
-        // }
+        return (
+            { success: false, message: error.type }
+        )
     }
 }
 

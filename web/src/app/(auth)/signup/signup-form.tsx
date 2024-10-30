@@ -24,15 +24,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { signUpWithEmail } from "@/actions/auth.actions"
+import FormButton from "@/components/form-button"
+import { toast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
 })
 
 export default function SignUpForm() {
@@ -42,14 +40,27 @@ export default function SignUpForm() {
             name: "",
             email: "",
             password: "",
-            confirmPassword: "",
         },
     })
 
-    // function onSubmit(values: z.infer<typeof formSchema>) {
-    //     // Here you would typically handle the sign-up process
-    //     console.log(values)
-    // }
+    async function onSubmit(formData: FormData) {
+
+        const response = await signUpWithEmail(formData)
+
+        if (!response.success) {
+            form.reset()
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: response.message
+                    .split('_')
+                    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                    || "There was a problem with your request"
+            })
+        }
+
+    }
 
     return (
         <div className="flex h-screen w-full items-center justify-center px-4">
@@ -62,7 +73,7 @@ export default function SignUpForm() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form action={signUpWithEmail} className="space-y-4">
+                        <form action={onSubmit} className="space-y-4">
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -96,28 +107,15 @@ export default function SignUpForm() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input type="password" {...field} />
+                                            <Input type="password" placeholder="******" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
-                                name="confirmPassword"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Confirm Password</FormLabel>
-                                        <FormControl>
-                                            <Input type="password" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button type="submit" className="w-full">
+                            <FormButton>
                                 Sign Up
-                            </Button>
+                            </FormButton>
                         </form>
                     </Form>
                 </CardContent>

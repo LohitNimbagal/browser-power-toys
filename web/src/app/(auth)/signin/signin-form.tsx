@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { signInWithEmail } from "@/actions/auth.actions"
+import FormButton from "@/components/form-button"
+import { toast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -30,7 +32,7 @@ const formSchema = z.object({
 })
 
 export default function SignInForm() {
-    
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,10 +41,23 @@ export default function SignInForm() {
         },
     })
 
-    // function onSubmit(values: z.infer<typeof formSchema>) {
-    //     // Here you would typically handle the sign-in process
-    //     console.log(values)
-    // }
+    async function onSubmit(formData: FormData) {
+
+        const response = await signInWithEmail(formData)
+
+        if (!response.success) {
+            form.reset()
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: response.message
+                    .split('_')
+                    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                    || "There was a problem with your request"
+            })
+        }
+    }
 
     return (
         <div className="flex h-screen w-full items-center justify-center px-4">
@@ -55,7 +70,7 @@ export default function SignInForm() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form action={signInWithEmail} className="space-y-4">
+                        <form action={onSubmit} className="space-y-4">
                             <FormField
                                 control={form.control}
                                 name="email"
@@ -74,22 +89,22 @@ export default function SignInForm() {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <div className="flex items-center justify-between">
-                                            <FormLabel>Password</FormLabel>
+                                        <FormLabel>Password</FormLabel>
+                                        {/* <div className="flex items-center justify-between">
                                             <Link href="#" className="text-sm underline">
                                                 Forgot your password?
                                             </Link>
-                                        </div>
+                                        </div> */}
                                         <FormControl>
-                                            <Input type="password" {...field} />
+                                            <Input type="password" placeholder="******" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" className="w-full">
+                            <FormButton>
                                 Sign In
-                            </Button>
+                            </FormButton>
                         </form>
                     </Form>
                     {/* <Button variant="outline" className="mt-4 w-full">
