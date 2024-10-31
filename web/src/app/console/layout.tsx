@@ -5,17 +5,17 @@ import { ThemeProvider } from '@/components/theme-provider'
 
 export default function ConsoleLayout({ children }: { children: ReactNode }) {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-        >
+        // <ThemeProvider
+        //     attribute="class"
+        //     defaultTheme="dark"
+        // >
             <div className={"flex flex-col min-h-screen"}>
                 <ConsoleHeader />
-                <main className="flex-grow flex items-start justify-start p-4">
+                <main className="flex-grow flex items-start justify-center p-4">
                     {children}
                 </main>
                 {/* <ConsoleFooter /> */}
             </div>
-        </ThemeProvider>
+        // </ThemeProvider>
     )
 }

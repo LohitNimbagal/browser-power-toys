@@ -38,7 +38,7 @@ export default async function ConsoleHeader() {
                             Explore Tools
                         </a>
                     </Button>
-                    <ThemeToggle />
+                    {/* <ThemeToggle /> */}
                     <UserAvatarMenu user={userInfo} />
                 </div>
             </div>

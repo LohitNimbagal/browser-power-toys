@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, HelpCircle, Infinity, Clock, Zap, YoutubeIcon } from "lucide-react"
 import Image from 'next/image'
 import YouTubeSaveButton from './_components/save-button'
+import Link from 'next/link'
 
 export default function page() {
 
@@ -24,7 +25,11 @@ export default function page() {
                                 </span>
                             </h1>
                             <p className="text-xl mb-8">Never lose track of videos you want to watch later.</p>
-                            <Button size="lg" variant="youtube">Get Started</Button>
+                            <Button size="lg" variant="youtube" asChild>
+                                <a href={'/signin'}>
+                                    Get Started
+                                </a>
+                            </Button>
                         </div>
                         <div className="w-full h-full grid grid-cols-2 gap-2">
                             <div className='relative'>
@@ -70,7 +75,7 @@ export default function page() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             <section className="py-20 w-full bg-white">
                 <div className="container max-w-7xl mx-auto px-4">
@@ -197,7 +202,7 @@ export default function page() {
                 </div>
             </section>
 
-            <section id="pricing" className="py-20 w-full bg-gray-100">
+            {/* <section id="pricing" className="py-20 w-full bg-gray-100">
                 <div className="container max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
                     <div className="max-w-md mx-auto">
@@ -229,21 +234,25 @@ export default function page() {
                                         <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
                                         <span>Priority customer support</span>
                                     </li> */}
-                                </ul>
+            {/* </ul>
                                 <Button className="w-full mt-6" variant={'youtube'} size="lg">Get Lifetime Access Now</Button>
                             </CardContent>
                         </Card>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="bg-white py-20 w-full ">
                 <div className="container max-w-7xl mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-4">Ready to Supercharge Your YouTube Experience?</h2>
                     <p className="text-xl mb-8">Join thousands of power users who never miss a video they want to watch later.</p>
-                    <Button size="lg" variant="youtube" >Get YouTube Power Tools Now</Button>
+                    <Button size="lg" variant="youtube" asChild>
+                        <a href={'/signin'}>
+                            Get YouTube Power Tools Now
+                        </a>
+                    </Button>
                 </div>
             </section>
-        </div>
+        </div >
     )
 }

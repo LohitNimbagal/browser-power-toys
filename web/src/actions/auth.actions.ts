@@ -89,13 +89,12 @@ export async function signOut() {
 
 }
 
-export async function addToWaitlist(previousState: any, formData: FormData) {
+export async function requestAccess() {
 
-    const name = formData.get('name') as string
-    const email = formData.get('email') as string
+    const user = await getCurrentUser()
 
-    if (!name || !email) {
-        return { success: false, message: 'Name and email are required' }
+    if (!user) {
+        redirect('/singin')
     }
 
     const { databases } = await createAdminClient();
@@ -105,11 +104,16 @@ export async function addToWaitlist(previousState: any, formData: FormData) {
             process.env.APPWRITE_DATABASE_ID!,
             process.env.APPWRITE_COLLECTION_WAITINGLIST_ID!,
             ID.unique(),
-            { name, email }
+            {
+                name: user.name,
+                email: user.email
+            }
         )
 
         return { success: true, message: 'Successfully added to the waitlist!' }
+
     } catch (error) {
+
         console.error('Error adding to waitlist:', error)
         return { success: false, message: 'Failed to add to waitlist. Please try again.' }
     }
