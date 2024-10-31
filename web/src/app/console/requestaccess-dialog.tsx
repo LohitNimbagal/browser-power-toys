@@ -1,23 +1,13 @@
-'use client'
-
-import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { requestAccess } from "@/actions/auth.actions"
 import { toast } from "@/hooks/use-toast"
+import { requestAccess } from "@/actions/user.actions"
 
-export function RequestAccessDialog() {
+export function RequestAccessDialog({ email }: { email: string }) {
 
     const onSubmit = async () => {
 
@@ -25,7 +15,7 @@ export function RequestAccessDialog() {
 
         if (response.success) {
             toast({
-                title: "Uh oh! Something went wrong.",
+                title: "Access Requested",
                 description: response.message
             })
         } else {
@@ -47,7 +37,7 @@ export function RequestAccessDialog() {
                     We&apos;re currently in beta! Some features may be limited, and your feedback is greatly appreciated as we continue to enhance the experience.
                 </p>
                 <p className="text-base">
-                    We will update you at your email (<span className="font-semibold">email@example.com</span>) with any new updates.
+                    We will update you at your email (<span className="font-semibold">{email}</span>) with any new updates.
                 </p>
                 <form action={onSubmit}>
                     <Button className="w-full">Request Access</Button>

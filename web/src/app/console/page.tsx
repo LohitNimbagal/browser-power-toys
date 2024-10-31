@@ -2,12 +2,13 @@ import React from 'react'
 import { Youtube } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { getCurrentUser } from '@/actions/user.actions';
+import { getCurrentUser, getRequestStatus } from '@/actions/user.actions';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCurrentUserYouTubeInfo } from '@/server/appwrite';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Label } from '@radix-ui/react-label';
 import { RequestAccessDialog } from './requestaccess-dialog';
+import { Button } from '@/components/ui/button';
 
 const allTools = [
     { id: 'ypt', name: "Youtube Power Tools", description: "Supercharge your YouTube Experience." },
@@ -19,7 +20,13 @@ export default async function page() {
 
     if (!user) redirect('/signin')
 
-    // const ownedByUsers = allTools.filter(tool => user.labels.includes(tool.id));
+    let hasAccess = null
+
+    if (user.labels.includes('betaUser') && user.labels.includes('ypt')) {
+        hasAccess = true
+    }
+
+    const requestStatus = await getRequestStatus(user.$id)
 
     const userYouTubeInfo = await getCurrentUserYouTubeInfo(user.$id)
 
@@ -73,12 +80,19 @@ export default async function page() {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <RequestAccessDialog />
-                                            // <Button className="w-full">
-                                            //     <a href={'/api/youtube-auth/init'}>
-                                            //         Connect to Youtube Account
-                                            //     </a>
-                                            // </Button>
+                                            hasAccess ? (
+                                                <Button className="w-full">
+                                                    <a href={'/api/youtube-auth/init'}>
+                                                        Connect to Youtube Account
+                                                    </a>
+                                                </Button>
+                                            ) : (
+                                                requestStatus ? (
+                                                    <Button variant={'outline'} className='w-full text-primary' disabled>Access Requested</Button>
+                                                ) : (
+                                                    <RequestAccessDialog email={user.email}/>
+                                                )
+                                            )
                                         )
                                     }
                                 </CardFooter>

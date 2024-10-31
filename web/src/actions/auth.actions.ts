@@ -88,33 +88,3 @@ export async function signOut() {
     redirect('/signin')
 
 }
-
-export async function requestAccess() {
-
-    const user = await getCurrentUser()
-
-    if (!user) {
-        redirect('/singin')
-    }
-
-    const { databases } = await createAdminClient();
-
-    try {
-        await databases.createDocument(
-            process.env.APPWRITE_DATABASE_ID!,
-            process.env.APPWRITE_COLLECTION_WAITINGLIST_ID!,
-            ID.unique(),
-            {
-                name: user.name,
-                email: user.email
-            }
-        )
-
-        return { success: true, message: 'Successfully added to the waitlist!' }
-
-    } catch (error) {
-
-        console.error('Error adding to waitlist:', error)
-        return { success: false, message: 'Failed to add to waitlist. Please try again.' }
-    }
-}

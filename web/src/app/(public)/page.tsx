@@ -18,7 +18,7 @@ export default function page() {
                 <h1 className="text-4xl font-bold mb-4 font-montserrat tracking-wide">The Ultimate Toolkit for <br /> <span className="text-[#6c2ced]">Super Users</span></h1>
                 <p className="text-xl mb-8 font-roboto tracking-wider">Upgrade your workflow with essential tools tailored for serious internet users. <br /> Say goodbye to limitations and hello to powerful possibilities.</p>
                 <Button size="lg" asChild>
-                  <Link href={'/waitinglist'}>
+                  <Link href={'/https://chromewebstore.google.com/detail/browser-power-toys-extens/iogkcmekkebgahbbfinglfcgifchfbla'} target="_blank">
                     Get Extension
                   </Link>
                 </Button>
