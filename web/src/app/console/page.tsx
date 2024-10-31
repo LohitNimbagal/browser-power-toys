@@ -2,9 +2,9 @@ import React from 'react'
 import { Youtube } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { getCurrentUser, getRequestStatus } from '@/actions/user.actions';
+import { getCurrentUser } from '@/actions/user.actions';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { getCurrentUserYouTubeInfo } from '@/server/appwrite';
+import { getCurrentUserYouTubeInfo, getRequestStatus } from '@/server/appwrite';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Label } from '@radix-ui/react-label';
 import { RequestAccessDialog } from './requestaccess-dialog';

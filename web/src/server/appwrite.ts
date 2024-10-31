@@ -66,3 +66,22 @@ export async function getCurrentUserYouTubeInfo(userId: string) {
     }
 
 }
+
+export async function getRequestStatus(userId: string) {
+
+    try {
+        const { databases } = await createSessionClient()
+
+        const requestStatus = await databases.listDocuments(
+            process.env.APPWRITE_DATABASE_ID!,
+            process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
+            [Query.equal("userId", userId)]
+        );
+
+        if (requestStatus.total === 1) return true
+
+        return false
+    } catch (error) {
+        return false
+    }
+}
