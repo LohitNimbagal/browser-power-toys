@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat, Roboto, Inter as FontSans } from 'next/font/google'
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react"
 
 const montserrat = Montserrat({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -41,6 +42,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <Analytics/>
       </body>
     </html>
   );
