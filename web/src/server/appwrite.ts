@@ -72,16 +72,18 @@ export async function getRequestStatus(userId: string) {
     try {
         const { databases } = await createSessionClient()
 
-        const requestStatus = await databases.listDocuments(
+        const response = await databases.listDocuments(
             process.env.APPWRITE_DATABASE_ID!,
-            process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
+            process.env.APPWRITE_COLLECTION_WAITINGLIST_ID!,
             [Query.equal("userId", userId)]
         );
 
-        if (requestStatus.total === 1) return true
+        if (response.total > 0) return true
 
         return false
+
     } catch (error) {
+        console.log(error);
         return false
     }
 }

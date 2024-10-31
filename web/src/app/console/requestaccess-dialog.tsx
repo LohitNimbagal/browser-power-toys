@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogTrigger,
 } from "@/components/ui/dialog"
@@ -41,9 +42,11 @@ export function RequestAccessDialog({ email }: { email: string }) {
                 <p className="text-base">
                     We will update you at your email (<span className="font-semibold">{email}</span>) with any new updates.
                 </p>
-                <form action={onSubmit}>
-                    <Button className="w-full">Request Access</Button>
-                </form>
+                <DialogClose>
+                    <form action={onSubmit}>
+                        <Button className="w-full">Request Access</Button>
+                    </form>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     )
