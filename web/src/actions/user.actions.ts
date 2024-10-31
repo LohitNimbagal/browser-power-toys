@@ -47,7 +47,7 @@ export async function requestAccess() {
                 name: user.name,
                 email: user.email
             }
-        )
+        ) 
 
         return { success: true, message: 'Successfully added to the waitlist!' }
 

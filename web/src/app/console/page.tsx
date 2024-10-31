@@ -7,7 +7,7 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
 import { getCurrentUserYouTubeInfo, getRequestStatus } from '@/server/appwrite';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Label } from '@radix-ui/react-label';
-import { RequestAccessDialog } from './requestaccess-dialog';
+import { RequestAccessDialog } from './_components/requestaccess-dialog';
 import { Button } from '@/components/ui/button';
 
 const allTools = [

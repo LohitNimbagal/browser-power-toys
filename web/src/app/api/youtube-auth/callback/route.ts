@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
             .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
             .setProject(process.env.APPWRITE_PROJECT_ID!);
 
-        if (!session) return NextResponse.json({ error: "No YPT User" }, { status: 400 })
+        if (!session) return NextResponse.json({ error: "No User" }, { status: 400 })
 
         client.setSession(session);
 

@@ -9,19 +9,24 @@ import {
 } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
 import { requestAccess } from "@/actions/user.actions"
+import { useRouter } from "next/navigation"
 
 export function RequestAccessDialog({ email }: { email: string }) {
+
+    const router = useRouter()
 
     const onSubmit = async () => {
 
         const response = await requestAccess()
 
         if (response.success) {
+            router.refresh()
             toast({
                 title: "Access Requested",
                 description: response.message
             })
         } else {
+            router.refresh()
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
