@@ -1,11 +1,12 @@
 function addIconToVideos() {
+    
     const videos = document.querySelectorAll("ytd-rich-item-renderer");
     const url = 'https://browserpowertoys.xyz';
 
     videos.forEach((video) => {
         if (!video.querySelector(".youtube-icon-extension")) {
             const icon = document.createElement("img");
-            const imageUrl = chrome.runtime.getURL("icons/save-image.png");
+            const imageUrl = chrome.runtime.getURL("icons/bookmark.svg");
             icon.src = imageUrl;
             icon.alt = "YouTube Icon";
             icon.className = "youtube-icon-extension"; // Add the class for styling
@@ -46,7 +47,7 @@ function addIconToVideos() {
 
                     try {
                         // Make API request to save the video
-                        const apiResponse = await fetch(`${url}/api/youtube/save-video`, {
+                        const apiResponse = await fetch(`${url}/api/youtube/monthly-playlist/add`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

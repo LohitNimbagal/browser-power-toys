@@ -21,7 +21,8 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "icons/save-image.png"
+                "icons/save-image.png",
+                "icons/bookmark.svg"
             ],
             "matches": [
                 "*://*/*"
