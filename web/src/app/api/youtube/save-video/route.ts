@@ -1,3 +1,4 @@
+import { TokenEncryption } from '@/utils/encription';
 import { google } from 'googleapis';
 import { NextRequest, NextResponse } from 'next/server';
 import { Account, Client, Databases, Query } from 'node-appwrite';
@@ -8,8 +9,10 @@ const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_REDIRECT_URI!
 );
 
-async function addToPlaylist(accessToken: string, videoId: string) {
+const tokenEncryption = new TokenEncryption(process.env.ENCRYPTION_KEY!);
 
+async function addToPlaylist(accessToken: string, videoId: string) {
+    // Use decrypted token
     oauth2Client.setCredentials({ access_token: accessToken });
     const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
 
@@ -29,7 +32,6 @@ async function addToPlaylist(accessToken: string, videoId: string) {
     let monthlyPlaylist = playlists.find((playlist) => playlist.snippet?.title === month);
 
     if (!monthlyPlaylist) {
-        // Create a new playlist for the current month if it doesn't exist
         const newPlaylistResponse = await youtube.playlists.insert({
             part: ['snippet', 'status'],
             requestBody: {
@@ -43,10 +45,8 @@ async function addToPlaylist(accessToken: string, videoId: string) {
             },
         });
         monthlyPlaylist = newPlaylistResponse.data;
-
     }
 
-    // Add the video to the monthly playlist
     const response = await youtube.playlistItems.insert({
         part: ['snippet'],
         requestBody: {
@@ -68,11 +68,9 @@ async function addToPlaylist(accessToken: string, videoId: string) {
     }
 
     return { videoInfo: videoInfo, addedToPlaylist: monthlyPlaylist.snippet?.title }
-
 }
 
 export async function POST(req: NextRequest) {
-
     const { videoId } = await req.json();
 
     if (!videoId) {
@@ -135,7 +133,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        
         const userYoutubeTokens = await databases.listDocuments(
             process.env.APPWRITE_DATABASE_ID!,
             process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
@@ -149,7 +146,12 @@ export async function POST(req: NextRequest) {
             }, { status: 404 });
         }
 
-        let { accessToken, refreshToken, expiresAt } = userYoutubeTokens.documents[0];
+        let { accessToken: encryptedAccessToken, refreshToken: encryptedRefreshToken, expiresAt } = userYoutubeTokens.documents[0];
+
+        // Decrypt tokens
+        const accessToken = tokenEncryption.decrypt(encryptedAccessToken);
+        const refreshToken = tokenEncryption.decrypt(encryptedRefreshToken);
+
         const isTokenExpired = Date.now() >= Number(expiresAt);
 
         if (isTokenExpired) {
@@ -157,18 +159,24 @@ export async function POST(req: NextRequest) {
                 oauth2Client.setCredentials({ refresh_token: refreshToken });
                 const { credentials } = await oauth2Client.refreshAccessToken();
 
-                accessToken = credentials.access_token!;
+                const newAccessToken = credentials.access_token!;
                 expiresAt = (credentials.expiry_date ?? Date.now()).toString();
 
-                // Update Appwrite with the new access token and expiration date
+                // Encrypt the new access token before saving
+                const encryptedNewAccessToken = tokenEncryption.encrypt(newAccessToken);
+
+                // Update Appwrite with the new encrypted access token and expiration date
                 await databases.updateDocument(
                     process.env.APPWRITE_DATABASE_ID!,
                     process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
                     userYoutubeTokens.documents[0].$id,
-                    { accessToken, expiresAt }
+                    {
+                        accessToken: encryptedNewAccessToken,
+                        expiresAt
+                    }
                 );
 
-                const savedVideoInfo = await addToPlaylist(accessToken, videoId);
+                const savedVideoInfo = await addToPlaylist(newAccessToken, videoId);
 
                 return NextResponse.json({
                     success: true,
@@ -206,5 +214,4 @@ export async function POST(req: NextRequest) {
             code: 'UNKNOWN_ERROR'
         }, { status: 500 });
     }
-
 }

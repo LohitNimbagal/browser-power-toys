@@ -1,10 +1,13 @@
-
+import { TokenEncryption } from '@/utils/encription';
 import { getUserChannelInfo } from '@/server/youtube';
 import { google } from 'googleapis';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { Account, Client, Databases, ID, Query } from 'node-appwrite';
 
+export const dynamic = 'force-dynamic'
+
+// Initialize OAuth2 client
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID!,
     process.env.GOOGLE_CLIENT_SECRET!,
@@ -12,91 +15,111 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+const tokenEncryption = new TokenEncryption(process.env.ENCRYPTION_KEY!)
 
 export async function GET(request: NextRequest) {
-
-    const storedState = cookies().get('oauth_state')?.value;
-    const session = cookies().get('bpt-session')?.value;
-
-    const { searchParams } = new URL(request.url);
-    const code = searchParams.get('code');
-    const state = searchParams.get('state');
-
-    if (!state || state !== storedState) {
-        return NextResponse.json({ error: 'State mismatch' }, { status: 400 });
-    }
-
-    if (!code) {
-        return NextResponse.json({ error: 'Authorization code not found' }, { status: 400 });
-    }
-
+    
     try {
+        // Validate OAuth state and session
+        const storedState = cookies().get('oauth_state')?.value;
+        const session = cookies().get('bpt-session')?.value;
 
-        const { tokens } = await oauth2Client.getToken(code as string);
+        if (!session) {
+            return NextResponse.json({ error: "No authenticated user session" }, { status: 401 });
+        }
 
-        const userChannelInfo = await getUserChannelInfo(tokens.access_token!)
+        // Parse and validate request parameters
+        const { searchParams } = new URL(request.url);
+        const code = searchParams.get('code');
+        const state = searchParams.get('state');
 
-        const redirectUrl = `${baseUrl}/console`;
+        if (!state || state !== storedState) {
+            return NextResponse.json({ error: 'Invalid OAuth state' }, { status: 400 });
+        }
 
-        const response = NextResponse.redirect(redirectUrl);
+        if (!code) {
+            return NextResponse.json({ error: 'Authorization code required' }, { status: 400 });
+        }
 
+        // Exchange code for tokens
+        const { tokens } = await oauth2Client.getToken(code);
+
+        if (!tokens.access_token || !tokens.refresh_token) {
+            throw new Error('Invalid token response');
+        }
+
+        // Get user channel information
+        const userChannelInfo = await getUserChannelInfo(tokens.access_token);
+
+        if (!userChannelInfo) {
+            throw new Error('Failed to fetch channel information');
+        }
+
+        // Initialize Appwrite client
         const client = new Client()
             .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
-            .setProject(process.env.APPWRITE_PROJECT_ID!);
+            .setProject(process.env.APPWRITE_PROJECT_ID!)
+            .setSession(session);
 
-        if (!session) return NextResponse.json({ error: "No User" }, { status: 400 })
+        const account = new Account(client);
+        const databases = new Databases(client);
 
-        client.setSession(session);
+        // Get current user
+        const user = await account.get();
 
-        const account = new Account(client)
-        const databases = new Databases(client)
+        // Encrypt tokens
+        const encryptedAccessToken = tokenEncryption.encrypt(tokens.access_token);
+        const encryptedRefreshToken = tokenEncryption.encrypt(tokens.refresh_token);
 
-        const user = await account.get()
-
+        // Check for existing tokens
         const userYoutubeTokens = await databases.listDocuments(
             process.env.APPWRITE_DATABASE_ID!,
             process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
             [Query.equal("userId", user.$id)]
         );
 
-        if (userYoutubeTokens.total === 0) {
+        // Prepare response
+        const response = NextResponse.redirect(`${baseUrl}/console`);
+        response.cookies.delete('oauth_state');
 
+        if (userYoutubeTokens.total === 0) {
+            // Create new token document
             await databases.createDocument(
                 process.env.APPWRITE_DATABASE_ID!,
                 process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
-                ID.unique(), {
-                accessToken: tokens.access_token,
-                refreshToken: tokens.refresh_token,
-                expiresAt: tokens.expiry_date?.toString(),
-                userId: user?.$id,
-                channelTitle: userChannelInfo?.title,
-                channelId: userChannelInfo?.channelId,
-                customUrl: userChannelInfo?.customUrl,
-                imageUrl: userChannelInfo?.imageUrl,
-            })
-
-            response.cookies.delete('oauth_state');
-
-            return response;
+                ID.unique(),
+                {
+                    userId: user.$id,
+                    accessToken: encryptedAccessToken,
+                    refreshToken: encryptedRefreshToken,
+                    expiresAt: tokens.expiry_date?.toString(),
+                    channelTitle: userChannelInfo.title,
+                    channelId: userChannelInfo.channelId,
+                    customUrl: userChannelInfo.customUrl,
+                    imageUrl: userChannelInfo.imageUrl,
+                }
+            );
+        } else {
+            // Update existing token document
+            await databases.updateDocument(
+                process.env.APPWRITE_DATABASE_ID!,
+                process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
+                userYoutubeTokens.documents[0].$id,
+                {
+                    accessToken: encryptedAccessToken,
+                    refreshToken: encryptedRefreshToken,  // Fixed typo in property name
+                    expiresAt: tokens.expiry_date?.toString(),  // Ensure consistent string format
+                }
+            );
         }
-
-        await databases.updateDocument(
-            process.env.APPWRITE_DATABASE_ID!,
-            process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
-            userYoutubeTokens.documents[0].$id,
-            {
-                accessToken: tokens.access_token,
-                expiresAt: tokens.expiry_date,
-                refreshTokens: tokens.refresh_token
-            }
-        );
-
-        response.cookies.delete('oauth_state');
 
         return response;
 
     } catch (error) {
-        console.error('Error exchanging authorization code:', error);
-        return NextResponse.json({ error: 'Failed to exchange authorization code' }, { status: 500 });
+        console.error('OAuth handler error:', error);
+        return NextResponse.json(
+            { error: 'Authentication failed', details: error instanceof Error ? error.message : 'Unknown error' },
+            { status: 500 }
+        );
     }
 }

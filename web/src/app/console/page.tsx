@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Label } from '@radix-ui/react-label';
 import { RequestAccessDialog } from './_components/requestaccess-dialog';
 import { Button } from '@/components/ui/button';
+import { TokenEncryption } from '@/utils/encription';
 
 const allTools = [
     { id: 'ypt', name: "Youtube Power Tools", description: "Supercharge your YouTube Experience." },
@@ -90,7 +91,7 @@ export default async function page() {
                                                 requestStatus ? (
                                                     <Button variant={'outline'} className='w-full text-primary' disabled>Access Requested</Button>
                                                 ) : (
-                                                    <RequestAccessDialog email={user.email}/>
+                                                    <RequestAccessDialog email={user.email} />
                                                 )
                                             )
                                         )

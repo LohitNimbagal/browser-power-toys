@@ -38,7 +38,7 @@ function addIconToVideos() {
                         showToast("Error getting access token. Redirecting to login...");
 
                         // Open a new link to the login page
-                        window.open('https://browserpowertoys/signin', '_blank');  // Replace with your actual login URL
+                        window.open('https://browserpowertoys.xyz/signin', '_blank');  // Replace with your actual login URL
                         return;
                     }
 
