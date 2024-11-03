@@ -9,7 +9,6 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 const scopes = [
-    'https://www.googleapis.com/auth/youtube.readonly',
     'https://www.googleapis.com/auth/youtubepartner'
 ];
 
