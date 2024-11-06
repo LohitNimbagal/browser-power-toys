@@ -117,14 +117,7 @@ export async function POST(req: NextRequest) {
             code: 'USER_NOT_FOUND'
         }, { status: 404 });
     }
-
-    if (!user.labels.includes('betaUser')) {
-        return NextResponse.json({
-            error: 'User lacks required beta access',
-            code: 'BETA_ACCESS_REQUIRED'
-        }, { status: 403 });
-    }
-
+    
     if (!user.labels.includes('ypt')) {
         return NextResponse.json({
             error: 'User lacks required YPT authorization',
