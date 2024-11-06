@@ -27,17 +27,17 @@ export default async function ConsoleHeader() {
             <div className="flex items-center justify-between">
                 <div className='flex gap-2'>
                     <Link href={'/'} className="flex items-center space-x-2">
-                        <Blocks className="h-8 w-8 text-black dark:text-primary" />
+                        <Blocks className="h-8 w-8 text-primary" />
                     </Link>
-                    <Badge variant={'outline'} className='text-black text-primary" w-fit h-fit'>Beta</Badge>
+                    {/* <Badge variant={'outline'} className='text-black text-primary" w-fit h-fit'>Beta</Badge> */}
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <Button asChild variant='outline' className=''>
+                    {/* <Button asChild variant='outline' className=''>
                         <a href='/tools'>
                             Explore Tools
                         </a>
-                    </Button>
+                    </Button> */}
                     {/* <ThemeToggle /> */}
                     <UserAvatarMenu user={userInfo} />
                 </div>

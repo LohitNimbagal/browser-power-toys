@@ -1,9 +1,10 @@
 'use server'
 
-import { createAdminClient, createSessionClient } from "@/server/appwrite";
+import { createAdminClient } from "@/server/appwrite";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Account, Client, ID, Query } from "node-appwrite";
+import { Account, Client, ID } from "node-appwrite";
 
 export async function getCurrentUser() {
 
@@ -47,7 +48,7 @@ export async function requestAccess() {
                 name: user.name,
                 email: user.email
             }
-        ) 
+        )
 
         return { success: true, message: 'Successfully added to the waitlist!' }
 
@@ -56,4 +57,28 @@ export async function requestAccess() {
         console.error('Error adding to waitlist:', error)
         return { success: false, message: 'Failed to add to waitlist. Please try again.' }
     }
+}
+
+export async function assignToolAccess(label: string, userId: string) {
+
+    try {
+        const { users } = await createAdminClient()
+
+        const user = await users.get(
+            userId
+        );
+
+        await users.updateLabels(
+            userId,
+            [...user.labels, label]
+        );
+
+        revalidatePath('/console')
+
+    } catch (error) {
+
+        console.error('Error updating to label:', error)
+        return { success: false, message: 'Failed to assign the access' }
+    }
+
 }

@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { Client, Account, Databases, Query } from "node-appwrite";
+import { Client, Account, Databases, Query, Users } from "node-appwrite";
 import { cookies } from "next/headers";
 import { google } from 'googleapis';
 import { redirect } from 'next/navigation';
@@ -19,6 +19,9 @@ export async function createAdminClient() {
         },
         get databases() {
             return new Databases(client);
+        },
+        get users() {
+            return new Users(client);
         },
     };
 }
