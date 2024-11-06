@@ -18,7 +18,7 @@ export default async function Header() {
                     <Link href={'/'} className="flex items-center space-x-2">
                         <Blocks className="h-8 w-8 text-[#6c2ced]" />
                     </Link>
-                    <Badge variant={'outline'} className='text-[#6c2ced] w-fit h-fit'>Beta</Badge>
+                    {/* <Badge variant={'outline'} className='text-[#6c2ced] w-fit h-fit'>Beta</Badge> */}
                 </div>
 
                 <nav className="flex gap-3">
