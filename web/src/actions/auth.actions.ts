@@ -24,7 +24,7 @@ export async function signInWithEmail(formData: FormData) {
 
         cookies().set("bpt-session", session.secret, {
             httpOnly: true,
-            sameSite: "strict",
+            sameSite: "lax",
             expires: new Date(session.expire),
             secure: true,
             path: "/",
@@ -61,7 +61,7 @@ export async function signUpWithEmail(formData: FormData) {
 
         cookies().set("bpt-session", session.secret, {
             httpOnly: true,
-            sameSite: "strict",
+            sameSite: "lax",
             secure: true,
             expires: new Date(session.expire),
             path: "/",
