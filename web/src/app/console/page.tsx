@@ -31,11 +31,11 @@ interface ChannelInfo {
 
 const allTools: Tool[] = [
     {
-        id: 'ypt',
+        id: 'ytt',
         name: "Youtube Power Tools",
         description: "Supercharge your YouTube Experience.",
-        paymentLink: process.env.YPT_PAYMENTLINK!,
-        requiredLabels: ['ypt']
+        paymentLink: process.env.YTT_PAYMENTLINK!,
+        requiredLabels: ['ytt']
     },
 ];
 

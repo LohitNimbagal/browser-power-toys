@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
         }, { status: 404, headers });
     }
 
-    if (!user.labels.includes('ypt')) {
+    if (!user.labels.includes('ytt')) {
         return NextResponse.json({
             error: 'User lacks required YPT authorization',
             code: 'YPT_ACCESS_REQUIRED'
