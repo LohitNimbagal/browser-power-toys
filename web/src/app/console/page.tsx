@@ -101,7 +101,7 @@ export default async function Page() {
                             </Button>
                         </div>
                     ) : (
-                        <Button className="w-full">
+                        <Button className="w-full" asChild>
                             <a href={'/api/youtube-auth/init'}>
                                 Connect to Youtube Account
                             </a>
