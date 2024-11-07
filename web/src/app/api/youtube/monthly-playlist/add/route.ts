@@ -3,6 +3,7 @@ import { google } from 'googleapis';
 import { NextRequest, NextResponse } from 'next/server';
 import { Account, Client, Databases, Query } from 'node-appwrite';
 
+// Initialize OAuth2 and encryption utilities
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID!,
     process.env.GOOGLE_CLIENT_SECRET!,
@@ -12,7 +13,7 @@ const oauth2Client = new google.auth.OAuth2(
 const tokenEncryption = new TokenEncryption(process.env.ENCRYPTION_KEY!);
 
 async function addToPlaylist(accessToken: string, videoId: string) {
-    // Use decrypted token
+    // OAuth2 and YouTube API interaction to add video to playlist
     oauth2Client.setCredentials({ access_token: accessToken });
     const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
 
@@ -71,13 +72,35 @@ async function addToPlaylist(accessToken: string, videoId: string) {
 }
 
 export async function POST(req: NextRequest) {
+
+    // Handle CORS preflight request
+    if (req.method === 'OPTIONS') {
+        return new NextResponse(null, {
+            status: 204,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://www.youtube.com',  // Set your domain or * for all
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Allow-Credentials': 'true',
+            },
+        });
+    }
+
+    // CORS headers for actual request
+    const headers = {
+        'Access-Control-Allow-Origin': 'https://www.youtube.com',  // Set your domain or * for all
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Credentials': 'true',
+    };
+
     const { videoId } = await req.json();
 
     if (!videoId) {
         return NextResponse.json({
             error: 'Failed to get video info',
             code: 'VIDEO_ID_MISSING'
-        }, { status: 400 });
+        }, { status: 400, headers });
     }
 
     const authHeader = req.headers.get('authorization');
@@ -86,7 +109,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             error: 'Authorization header missing or invalid',
             code: 'AUTH_HEADER_INVALID'
-        }, { status: 401 });
+        }, { status: 401, headers });
     }
 
     const sessionFromExtension = authHeader.split(' ')[1];
@@ -96,7 +119,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             error: 'Session token missing in authorization header',
             code: 'SESSION_TOKEN_MISSING'
-        }, { status: 401 });
+        }, { status: 401, headers });
     }
 
     const client = new Client()
@@ -115,14 +138,14 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             error: 'No user associated with this session',
             code: 'USER_NOT_FOUND'
-        }, { status: 404 });
+        }, { status: 404, headers });
     }
-    
+
     if (!user.labels.includes('ypt')) {
         return NextResponse.json({
             error: 'User lacks required YPT authorization',
             code: 'YPT_ACCESS_REQUIRED'
-        }, { status: 403 });
+        }, { status: 403, headers });
     }
 
     try {
@@ -136,7 +159,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: 'No YouTube tokens found for the user',
                 code: 'YOUTUBE_TOKENS_NOT_FOUND'
-            }, { status: 404 });
+            }, { status: 404, headers });
         }
 
         let { accessToken: encryptedAccessToken, refreshToken: encryptedRefreshToken, expiresAt } = userYoutubeTokens.documents[0];
@@ -174,14 +197,14 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json({
                     success: true,
                     savedVideoInfo: savedVideoInfo
-                });
+                }, { headers });
 
             } catch (error) {
                 console.error("Error refreshing token:", error);
                 return NextResponse.json({
                     error: 'Failed to refresh access token',
                     code: 'TOKEN_REFRESH_FAILED'
-                }, { status: 500 });
+                }, { status: 500, headers });
             }
         }
 
@@ -190,7 +213,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: true,
             savedVideoInfo: savedVideoInfo
-        });
+        }, { headers });
 
     } catch (error) {
         console.error("Error handling request:", error);
@@ -199,12 +222,12 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: 'Database query error or invalid input',
                 code: 'DB_QUERY_FAILED'
-            }, { status: 500 });
+            }, { status: 500, headers });
         }
 
         return NextResponse.json({
             error: 'An unexpected error occurred',
             code: 'UNKNOWN_ERROR'
-        }, { status: 500 });
+        }, { status: 500, headers });
     }
 }

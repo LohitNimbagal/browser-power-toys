@@ -61,7 +61,7 @@ export async function signUpWithEmail(formData: FormData) {
 
         cookies().set("bpt-session", session.secret, {
             httpOnly: true,
-            // sameSite: "strict",
+            sameSite: "strict",
             secure: true,
             expires: new Date(session.expire),
             path: "/",
