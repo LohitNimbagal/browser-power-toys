@@ -1,9 +1,9 @@
 import { TokenEncryption } from '@/utils/encription';
-import { getUserChannelInfo } from '@/server/youtube';
+import { getUserChannelInfo } from '@/queries/youtube';
 import { google } from 'googleapis';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { Account, Client, Databases, ID, Query } from 'node-appwrite';
+import { Account, Client, Databases, ID, Permission, Query, Role } from 'node-appwrite';
 
 export const dynamic = 'force-dynamic'
 
@@ -18,7 +18,7 @@ const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 const tokenEncryption = new TokenEncryption(process.env.ENCRYPTION_KEY!)
 
 export async function GET(request: NextRequest) {
-    
+
     try {
         // Validate OAuth state and session
         const storedState = cookies().get('oauth_state')?.value;
@@ -97,7 +97,11 @@ export async function GET(request: NextRequest) {
                     channelId: userChannelInfo.channelId,
                     customUrl: userChannelInfo.customUrl,
                     imageUrl: userChannelInfo.imageUrl,
-                }
+                },
+                [
+                    Permission.read(Role.user(user.$id)),
+                    Permission.write(Role.user(user.$id)),
+                ]
             );
         } else {
             // Update existing token document
@@ -109,7 +113,7 @@ export async function GET(request: NextRequest) {
                     accessToken: encryptedAccessToken,
                     refreshToken: encryptedRefreshToken,  // Fixed typo in property name
                     expiresAt: tokens.expiry_date?.toString(),  // Ensure consistent string format
-                }
+                },
             );
         }
 

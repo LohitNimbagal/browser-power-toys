@@ -15,15 +15,11 @@ import { LogOut, HelpCircle, User, Settings } from "lucide-react"
 import { signOut } from "@/actions/auth.actions"
 
 export default function UserAvatarMenu({ user }: { user: { name: string, email: string } }) {
+
     const [isOpen, setIsOpen] = useState(false)
 
     const handleLogout = async () => {
         await signOut()
-    }
-
-    const handleSupport = () => {
-        console.log("Support clicked")
-        // Implement support logic here
     }
 
     return (
@@ -54,11 +50,11 @@ export default function UserAvatarMenu({ user }: { user: { name: string, email: 
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>
                 </DropdownMenuItem> */}
-                <DropdownMenuItem onClick={handleSupport}>
+                {/* <DropdownMenuItem>
                     <HelpCircle className="mr-2 h-4 w-4" />
                     <span>Support</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>

@@ -1,11 +1,9 @@
 'use server'
 
-import { createAdminClient, createSessionClient } from "@/server/appwrite";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { ID } from "node-appwrite";
-import { getCurrentUser } from "./user.actions";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { createAdminClient, createSessionClient } from "@/config/appwrite";
 
 export async function signInWithEmail(formData: FormData) {
 
@@ -26,7 +24,7 @@ export async function signInWithEmail(formData: FormData) {
 
         cookies().set("bpt-session", session.secret, {
             httpOnly: true,
-            // sameSite: "strict",
+            sameSite: "strict",
             expires: new Date(session.expire),
             secure: true,
             path: "/",
@@ -83,8 +81,13 @@ export async function signUpWithEmail(formData: FormData) {
 
 export async function signOut() {
 
+    const { account } = await createSessionClient()
+
+    await account.deleteSession(
+        'current'
+    );
+
     await cookies().delete('bpt-session')
 
     redirect('/signin')
-
 }

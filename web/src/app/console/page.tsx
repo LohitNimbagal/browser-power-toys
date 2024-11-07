@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { getCurrentUser } from '@/actions/user.actions';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { getCurrentUserYouTubeInfo } from '@/server/appwrite';
+import { getCurrentUserYouTubeInfo } from '@/queries/appwrite';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';

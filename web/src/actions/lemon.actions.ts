@@ -1,46 +1,47 @@
+'use server'
+
 import { configureLemonSqueezy } from "@/config/lemonsqueezy"
 import { assignToolAccess, getCurrentUser } from "./user.actions"
-import { createCheckout } from "@lemonsqueezy/lemonsqueezy.js"
 
-export async function getCheckoutURL(variantId: number, embed = false) {
+// export async function getCheckoutURL(variantId: number, embed = false) {
 
-    configureLemonSqueezy()
+//     configureLemonSqueezy()
 
-    const user = await getCurrentUser()
+//     const user = await getCurrentUser()
 
-    if (!user) {
-        throw new Error('User is not authenticated.')
-    }
+//     if (!user) {
+//         throw new Error('User is not authenticated.')
+//     }
 
-    // import { createCheckout } from '@lemonsqueezy/lemonsqueezy.js'
-    const checkout = await createCheckout(
-        process.env.LEMONSQUEEZY_STORE_ID!,
-        variantId,
-        {
-            checkoutOptions: {
-                embed,
-                media: false,
-                logo: !embed,
-            },
-            checkoutData: {
-                email: user.email ?? undefined,
-                custom: {
-                    user_id: user.$id,
-                },
-            },
-            productOptions: {
-                enabledVariants: [variantId],
-                redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/`,
-                receiptButtonText: 'Go to Dashboard',
-                receiptThankYouNote: 'Thank you for signing up to Lemon Stand!',
-            },
-        }
-    )
+//     // import { createCheckout } from '@lemonsqueezy/lemonsqueezy.js'
+//     const checkout = await createCheckout(
+//         process.env.LEMONSQUEEZY_STORE_ID!,
+//         variantId,
+//         {
+//             checkoutOptions: {
+//                 embed,
+//                 media: false,
+//                 logo: !embed,
+//             },
+//             checkoutData: {
+//                 email: user.email ?? undefined,
+//                 custom: {
+//                     user_id: user.$id,
+//                 },
+//             },
+//             productOptions: {
+//                 enabledVariants: [variantId],
+//                 redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/`,
+//                 receiptButtonText: 'Go to Dashboard',
+//                 receiptThankYouNote: 'Thank you for signing up to Lemon Stand!',
+//             },
+//         }
+//     )
 
-    console.log(checkout);
+//     console.log(checkout);
 
-    return checkout.data?.data.attributes.url
-}
+//     return checkout.data?.data.attributes.url
+// }
 
 export async function processWebhookEvent(webhookEvent: any) {
 
