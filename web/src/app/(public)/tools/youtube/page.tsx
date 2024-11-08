@@ -1,258 +1,168 @@
-import React from 'react'
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle, HelpCircle, Infinity, Clock, Zap, YoutubeIcon } from "lucide-react"
-import Image from 'next/image'
-import YouTubeSaveButton from './_components/save-button'
-import Link from 'next/link'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Youtube, Infinity, Zap, Star, MessageSquarePlus, DollarSign, CheckCircle } from "lucide-react"
+import Link from "next/link"
 
-export default function page() {
-
+export default function YouTubeToolsReadMore() {
     return (
-        <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <div className="min-h-screen bg-red-50">
+            <main className="container mx-auto px-4 py-12">
+                <div className="max-w-4xl mx-auto">
 
-            <section className="bg-gray-100 py-20 w-full">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div className="text-center md:text-left">
-                            <h1 className="text-4xl font-bold mb-4 leading-[3rem]">Unlimited Watch Later for
-                                <span className='flex items-center flex-col md:flex-row'>
-                                    <span className='bg-youtube p-2 rounded-md m-1 mr-2 w-fit flex items-center gap-2 text-white'>
-                                        <YoutubeIcon className='w-12 h-12' />
-                                        YouTube
-                                    </span>
-                                    Power Users
-                                </span>
-                            </h1>
-                            <p className="text-xl mb-8">Never lose track of videos you want to watch later.</p>
-                            <Button size="lg" variant="youtube" asChild>
-                                <a href={'/signin'}>
-                                    Get Started
-                                </a>
-                            </Button>
+                    {/* Hero Section */}
+                    <div className="text-center mb-16">
+                        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 mb-6 ">
+                            <Youtube className="h-10 w-10 text-red-600" />
                         </div>
-                        <div className="w-full h-full grid grid-cols-2 gap-2">
-                            <div className='relative'>
-                                <Image
-                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
-                                    width={1080}
-                                    height={900}
-                                    className="object-cover rounded-md aspect-video w-72"
-                                    alt="extension installed image"
-                                />
-                                <YouTubeSaveButton />
-                            </div>
-                            <div className='relative'>
-                                <Image
-                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
-                                    width={1080}
-                                    height={900}
-                                    className="object-cover rounded-md aspect-video w-72"
-                                    alt="extension installed image"
-                                />
-                                <YouTubeSaveButton />
-                            </div>
-                            <div className='relative'>
-                                <Image
-                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
-                                    width={1080}
-                                    height={900}
-                                    className="object-cover rounded-md aspect-video w-72"
-                                    alt="extension installed image"
-                                />
-                                <YouTubeSaveButton />
-                            </div>
-                            <div className='relative'>
-                                <Image
-                                    src='https://picsum.photos/seed/picsum/1920/1080?random=2'
-                                    width={1080}
-                                    height={900}
-                                    className="object-cover rounded-md aspect-video w-72"
-                                    alt="extension installed image"
-                                />
-                                <YouTubeSaveButton />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section >
-
-            <section className="py-20 w-full bg-white">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12">Understanding the Power User&apos;s Dilemma</h2>
-                    <div className="max-w-3xl mx-auto space-y-8">
-                        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
-                            <CardContent className="p-6">
-                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-red-100 p-3 w-fit rounded-full">
-                                        <HelpCircle className="w-6 h-6 text-red-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-semibold mb-2">What&apos;s the problem with YouTube&apos;s &quot;Watch Later&quot; feature?</h3>
-                                        <p className="text-gray-600">
-                                            YouTube&apos;s &quot;Watch Later&quot; feature has a limit of 5,000 videos. For power users, this limit is often exceeded, leading to lost content and frustration.
-                                        </p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg bg-red-50 border-red-200">
-                            <CardContent className="p-6">
-                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-red-100 p-3 w-fit rounded-full">
-                                        <HelpCircle className="w-6 h-6 text-red-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-semibold mb-2">How does this affect power users?</h3>
-                                        <p className="text-red-700 mb-4">
-                                            Power users often find themselves unable to save new videos, missing out on content they want to watch later. Don&apos;t let YouTube&apos;s limitations hold you back!
-                                        </p>
-                                        <p className="text-gray-700">
-                                            Before YouTube Power Tools, power users had to go through the frustrating process of selecting &quot;Add to playlist&quot; from YouTube and then choosing a specific playlist. This extra step added unnecessary friction to their workflow.
-                                        </p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            <section className="py-20 w-full bg-gray-100">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12">Our Innovative Solution</h2>
-                    <div className="max-w-3xl mx-auto space-y-8">
-                        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
-                            <CardContent className="p-6">
-                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-green-100 p-3 w-fit rounded-full">
-                                        <CheckCircle className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-semibold mb-2">How does YouTube Power Tools work?</h3>
-                                        <p className="text-gray-600 mb-4">
-                                            After installing the YouTube Power Tools extension, you&apos;ll see a new icon on every video. Clicking this icon automates everything:
-                                        </p>
-                                        <ul className="list-disc list-inside text-gray-600 space-y-2">
-                                            <li>Automatically saves the video to a new monthly playlist</li>
-                                            <li>No need to manually select playlists</li>
-                                            <li>Ensures you never lose track of videos you want to watch later</li>
-                                        </ul>
-                                        <p className="text-gray-600 mt-4">
-                                            More powerful features are coming soon to enhance your YouTube experience even further!
-                                        </p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg bg-green-50 border-green-200">
-                            <CardContent className="p-6">
-                                <div className="flex flex-col text-start gap-3 md:gap-0 md:flex-row md:items-start md:space-x-4">
-                                    <div className="bg-green-100 p-3 w-fit rounded-full">
-                                        <CheckCircle className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-semibold mb-2">What are the benefits for users?</h3>
-                                        <ul className="list-disc list-inside text-gray-600 space-y-2">
-                                            <li>Unlimited storage for your Watch Later videos</li>
-                                            <li>Automatic monthly playlist creation</li>
-                                            <li>Seamless integration with YouTube&apos;s interface</li>
-                                            <li>Never miss a video you want to watch later</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            <section id="features" className="py-20 w-full bg-white">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12">Powerful Features for Power Users</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="flex flex-col items-center text-center p-6 bg-red-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                            <div className="bg-red-100 p-3 rounded-full mb-4">
-                                <Infinity className="h-8 w-8 text-red-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Unlimited Storage</h3>
-                            <p className="text-gray-600">Save as many videos as you want without worrying about limits. Your watch later list, your way.</p>
-                        </div>
-                        <div className="flex flex-col items-center text-center p-6 bg-blue-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                            <div className="bg-blue-100 p-3 rounded-full mb-4">
-                                <Clock className="h-8 w-8 text-blue-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Auto-Playlists</h3>
-                            <p className="text-gray-600">New playlists are automatically created each month for easy organization and browsing.</p>
-                        </div>
-                        <div className="flex flex-col items-center text-center p-6 bg-green-50 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                            <div className="bg-green-100 p-3 rounded-full mb-4">
-                                <Zap className="h-8 w-8 text-green-600" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Seamless Integration</h3>
-                            <p className="text-gray-600">Works flawlessly with YouTube&apos;s existing &quot;Save to Watch Later&quot; functionality. No learning curve.</p>
-                        </div>
-                    </div>
-                    <div className="mt-12 text-center">
-                        <p className="text-lg text-gray-600 flex flex-wrap items-center justify-center gap-2">
-                            <Zap className="w-5 h-5 text-red-600" />
-                            More power user features coming soon!
+                        <h1 className="text-4xl font-bold mb-4">YouTube Toolkit</h1>
+                        <p className="text-xl text-gray-600 mb-8">Enhance your YouTube experience beyond its limits.</p>
+                        {/* <p className="text-xl text-gray-600 mb-8">Your content, your control, your way.</p> */}
+                        <p className="max-w-2xl mx-auto text-gray-600">
+                            Unlock the full potential of YouTube with our powerful browser extension.
+                            Break free from platform restrictions and customize your viewing experience
+                            with advanced features designed for power users.
                         </p>
                     </div>
-                </div>
-            </section>
 
-            {/* <section id="pricing" className="py-20 w-full bg-gray-100">
-                <div className="container max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
-                    <div className="max-w-md mx-auto">
-                        <Card className="overflow-hidden">
-                            <div className="bg-youtube p-6 text-white text-center">
-                                <h3 className="text-2xl font-bold mb-2">Lifetime Access</h3>
-                                <p className="text-5xl font-bold">$10</p>
-                                <p className="text-sm mt-2">One-time payment</p>
+                    {/* Redesigned Unlimited and Organized Watch Later Card */}
+                    <Card className="mb-12 bg-white border border-red-100">
+                        <CardHeader>
+                            <CardTitle className="text-2xl font-bold flex items-center flex-wrap gap-4">
+                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-100">
+                                    <Infinity className="h-6 w-6 text-red-600" />
+                                </div>
+                                Unlimited and Organized Watch Later
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-gray-600 mb-4">
+                                Break free from YouTube&apos;s 5,000 video limit. Our solution provides unlimited storage and better organization for power users.
+                            </p>
+                            <h3 className="font-semibold mb-2 text-xl text-gray-800">How it works:</h3>
+                            <ul className="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                                <li>One Click - Auto Save videos to monthly playlists</li>
+                                <li>No manual playlist selection needed</li>
+                                <li>Never lose track of your favorite content</li>
+                            </ul>
+                            <div className="hidden lg:flex flex-row items-start gap-1 justify-between lg:px-20 lg:pr-28 relative">
+                                <Image
+                                    src="/video.jpeg"
+                                    alt="Unlimited Watch Later Feature"
+                                    width={300}
+                                    height={150}
+                                    className="rounded-lg shadow-md w-80"
+                                />
+                                <Image
+                                    src="/playlist.jpeg"
+                                    alt="Organized Playlists Feature"
+                                    width={300}
+                                    height={150}
+                                    className="rounded-lg shadow-md w-80"
+                                />
+                                <Image
+                                    src="/oneclick.svg"
+                                    alt="Organized Playlists Feature"
+                                    width={300}
+                                    height={150}
+                                    className="w-28 absolute -left-1 top-1"
+                                />
+                                <Image
+                                    src="/monthly.svg"
+                                    alt="Organized Playlists Feature"
+                                    width={600}
+                                    height={150}
+                                    className="w-80 absolute -right-4 -bottom-4"
+                                />
                             </div>
-                            <CardContent className="p-6">
-                                <ul className="space-y-4">
-                                    <li className="flex items-center">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Unlimited Watch Later</span>
-                                    </li>
-                                    <li className="flex items-center">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Automatic monthly playlist creation</span>
-                                    </li>
-                                    <li className="flex items-center">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Seamless YouTube integration</span>
-                                    </li>
-                                    <li className="flex items-center">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Access to all future Youtube Power Tools features</span>
-                                    </li>
-                                    {/* <li className="flex items-center">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                                        <span>Priority customer support</span>
-                                    </li> */}
-            {/* </ul>
-                                <Button className="w-full mt-6" variant={'youtube'} size="lg">Get Lifetime Access Now</Button>
+                            <Image
+                                src="/mobile-image.jpeg"
+                                alt="Organized Playlists Feature"
+                                width={1920}
+                                height={1080}
+                                className="w-full lg:hidden"
+                            />
+                        </CardContent>
+                    </Card>
+
+                    {/* Additional Features */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                        <Card className="bg-white border border-yellow-100">
+                            <CardHeader>
+                                <CardTitle className="text-xl font-semibold flex items-center flex-wrap gap-4">
+                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-100">
+                                        <Star className="h-6 w-6 text-yellow-600" />
+                                    </div>
+                                    More Features Coming Soon
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-gray-600">Stay tuned for exciting new features to enhance your YouTube experience even further.</p>
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-white border border-purple-100">
+                            <CardHeader>
+                                <CardTitle className="text-xl font-semibold flex items-center flex-wrap gap-4">
+                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-purple-100">
+                                        <MessageSquarePlus className="h-6 w-6 text-purple-600" />
+                                    </div>
+                                    Request a Feature
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-gray-600">Have an idea for a new feature? Let us know, and we might add it in a future update!</p>
                             </CardContent>
                         </Card>
                     </div>
-                </div>
-            </section> */}
 
-            <section className="bg-white py-20 w-full ">
-                <div className="container max-w-7xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-4">Ready to Supercharge Your YouTube Experience?</h2>
-                    <p className="text-xl mb-8">Join thousands of power users who never miss a video they want to watch later.</p>
-                    <Button size="lg" variant="youtube" asChild>
-                        <a href={'/signin'}>
-                            Get YouTube Power Tools Now
-                        </a>
-                    </Button>
+                    {/* Pricing */}
+                    <Card className="mb-12 bg-white border border-red-100">
+                        <CardHeader>
+                            <CardTitle className="text-xl font-semibold flex items-center">
+                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mr-4">
+                                    <DollarSign className="h-6 w-6 text-red-600" />
+                                </div>
+                                Pricing
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-lg font-medium">Lifetime Access</span>
+                                    <span className="text-3xl font-bold text-youtube">$10</span>
+                                </div>
+                                <ul className="space-y-2">
+                                    <li className="flex items-center">
+                                        <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 text-red-500" />
+                                        <span className="text-gray-600">Auto-playlist organization</span>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 text-red-500" />
+                                        <span className="text-gray-600">Seamless YouTube integration</span>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 text-red-500" />
+                                        <span className="text-gray-600">Access to all future features</span>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 text-red-500" />
+                                        <span className="text-gray-600">Lifetime support</span>
+                                    </li>
+                                </ul>
+                                <p className="text-gray-600 mt-4">
+                                    Pay once and enjoy YouTube Tools forever. Get unlimited Watch Later storage and access to all future updates.
+                                </p>
+                            </div>
+                            <Button variant={'youtube'} size="lg" className="w-full mt-4" asChild>
+                                <Link href='/signin' prefetch={true}>
+                                    Get Lifetime Access Now
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+
                 </div>
-            </section>
-        </div >
+            </main>
+        </div>
     )
 }
