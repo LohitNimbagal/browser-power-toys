@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension - Main</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+
+    <div class="buttons-container">
+
+        <!-- SignIn/SignUp buttons will be shown if cookie is not available -->
+        <div id="auth-buttons" class="auth-buttons">
+            <a id="signin-btn" class="btn primary" href="https://browserpowertoys.xyz/signin" target="_blank">Sign In</a>
+            <a id="signup-btn" class="btn secondary" href="https://browserpowertoys.xyz/signin" target="_blank">Sign Up</a>
+        </div>
+
+        <!-- Console button will be shown if cookie is available -->
+        <div id="console-btn" class="console-btn" style="display: none;">
+            <a class="btn primary" href="https://browserpowertoys.xyz/console" target="_blank">Go to Console</a>
+        </div>
+
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>

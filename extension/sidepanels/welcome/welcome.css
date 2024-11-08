@@ -1,0 +1,124 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: auto;
+}
+
+/* Welcome container without card styling */
+.welcome-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+.highlight {
+    color: #7a40ee;
+}
+
+/* Hero Section */
+.hero h1 {
+    font-size: 1.8rem;
+    color: #4A4A4A;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1rem;
+    color: #6b6b6b;
+    margin-bottom: 20px;
+}
+
+/* Logo Container */
+.logo-container {
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 10%;
+    object-fit: contain;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Info Section */
+.info-section p {
+    font-size: 1rem;
+    color: #6b6b6b;
+    margin-bottom: 20px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.primary {
+    background-color: #6c2ced;
+    color: white;
+}
+
+.primary:hover {
+    background-color: #5a1ac1;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.primary {
+    background-color: #7a40ee;
+    color: #fff;
+    border: none;
+}
+
+.primary:hover {
+    background-color: #5a1ac1;
+}
+
+.secondary {
+    background-color: white;
+    color: #6c2ced;
+    border: 2px solid #6c2ced;
+}
+
+.secondary:hover {
+    background-color: #f1f1f1;
+}

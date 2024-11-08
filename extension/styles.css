@@ -9,13 +9,11 @@
     border-radius: 100%;
     color: whitesmoke;
     background: black;
-    padding: 0.5rem;
+    padding: 0.6rem;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    /* Smooth transition for scaling and opacity */
 }
 
 .youtube-icon-extension:hover {
     cursor: pointer;
     transform: scale(1.1);
-    /* Slightly scale up */
 }

@@ -17,7 +17,9 @@
         "tabs",
         "cookies"
     ],
-    "action": {},
+    "action": {
+        "default_title": "Click to open panel"
+    },
     "web_accessible_resources": [
         {
             "resources": [
@@ -36,9 +38,6 @@
     ],
     "background": {
         "service_worker": "background.js"
-    },
-    "side_panel": {
-        "default_path": "sidepanel.html"
     },
     "content_scripts": [
         {

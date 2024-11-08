@@ -15,10 +15,6 @@ function handleApiError(errorData) {
             showToast('USER_NOT_FOUND');
             window.open('https://browserpowertoys.xyz/signup', '_blank');
             break;
-        case 'BETA_ACCESS_REQUIRED':
-            showToast('BETA_ACCESS_REQUIRED');
-            window.open('https://browserpowertoys.xyz/waitinglist', '_blank');
-            break;
         case 'YPT_ACCESS_REQUIRED':
             showToast('YPT_ACCESS_REQUIRED');
             window.open('https://browserpowertoys.xyz/tools/youtube', '_blank');

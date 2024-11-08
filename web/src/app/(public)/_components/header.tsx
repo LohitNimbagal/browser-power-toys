@@ -22,11 +22,16 @@ export default async function Header() {
                 </div>
 
                 <nav className="flex gap-3">
-                    <Button variant={'outline'} className='text-primary hover:text-primary' asChild>
+                    <Button  variant={'outline'} className="text-primary hover:text-primary" asChild>
+                        <Link href={'https://chromewebstore.google.com/detail/browser-power-toys-extens/iogkcmekkebgahbbfinglfcgifchfbla'} target="_blank">
+                            Get Extension
+                        </Link>
+                    </Button>
+                    {/* <Button variant={'outline'} className='text-primary hover:text-primary' asChild>
                         <a href='/tools'>
                             Explore Tools
                         </a>
-                    </Button>
+                    </Button> */}
                     {
                         user ? (
                             <Button asChild>
