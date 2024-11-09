@@ -24,17 +24,73 @@ export async function createAdminClient() {
     };
 }
 
-export async function createSessionClient() {
+// export async function createSessionClient() {
+
+//     const client = new Client()
+//         .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
+//         .setProject(process.env.APPWRITE_PROJECT_ID!);
+
+//     const session = await cookies().get("bpt-session")
+
+//     if (!session) redirect('/signin')
+
+//     client.setSession(session.value);
+
+//     return {
+//         get account() {
+//             return new Account(client);
+//         },
+//         get databases() {
+//             return new Databases(client);
+//         },
+//     };
+// }
+
+// export async function createSessionClientWithSession(session: string) {
+
+//     if (!session) {
+//         console.log("Session required to create Session Client")
+//         return {
+//             get account() {
+//                 return null
+//             },
+//             get databases() {
+//                 return null
+//             },
+//         };
+//     }
+
+//     const client = new Client()
+//         .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
+//         .setProject(process.env.APPWRITE_PROJECT_ID!)
+//         .setSession(session);
+
+//     return {
+//         get account() {
+//             return new Account(client);
+//         },
+//         get databases() {
+//             return new Databases(client);
+//         },
+//     };
+// }
+
+export async function createSessionClient(session?: string) {
 
     const client = new Client()
         .setEndpoint(process.env.APPWRITE_ENDPOINT_ID!)
         .setProject(process.env.APPWRITE_PROJECT_ID!);
 
-    const session = await cookies().get("bpt-session")
+    if (!session) {
+        const cookieSession = await cookies().get("bpt-session");
+        if (!cookieSession) {
+            redirect('/signin');
+            // return createPlaceholderClient(); // Return placeholder instead of null
+        }
+        session = cookieSession.value;
+    }
 
-    if (!session) redirect('/signin')
-
-    client.setSession(session.value);
+    client.setSession(session);
 
     return {
         get account() {
@@ -45,3 +101,23 @@ export async function createSessionClient() {
         },
     };
 }
+
+// function createPlaceholderClient() {
+//     return {
+//         get account() {
+//             return {
+//                 create: () => console.warn("No session available"),
+//                 update: () => console.warn("No session available"),
+//                 delete: () => console.warn("No session available"),
+//                 // Add other methods as needed with warning messages
+//             };
+//         },
+//         get databases() {
+//             return {
+//                 listDocuments: () => console.warn("No session available"),
+//                 createDocument: () => console.warn("No session available"),
+//                 // Add other methods as needed with warning messages
+//             };
+//         },
+//     };
+// }
