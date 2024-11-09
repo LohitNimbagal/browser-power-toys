@@ -87,6 +87,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const { videoId } = await req.json();
+
         if (!videoId) {
             return createErrorResponse('VIDEO_ID_MISSING', 'Failed to get video info', 400, headers);
         }
@@ -121,6 +122,7 @@ export async function POST(req: NextRequest) {
             if (!refreshedTokenData.success || !refreshedTokenData.credentials) {
                 return createErrorResponse('TOKEN_REFRESH_FAILED', 'Failed to refresh access token', 500, headers);
             }
+            
             accessToken = refreshedTokenData.credentials.access_token!;
 
         }

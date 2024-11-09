@@ -1,7 +1,7 @@
 import 'server-only'
 import { google } from 'googleapis';
 import { TokenEncryption } from '@/utils/encription';
-import { updateAccessTokenInDatabase } from '@/actions/user.actions';
+import { deleteAccessTokenInDatabase, updateAccessTokenInDatabase } from '@/actions/user.actions';
 
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID!,
@@ -64,8 +64,14 @@ export async function refreshAccessToken(refreshToken: string, userYouTubeInfoId
             credentials,
         };
 
-    } catch (error) {
-        console.error("Error refreshing token or adding to playlist:", error);
+    } catch (error: any) {
+
+        console.error("Error refreshing token:", error);
+
+        if (error?.response?.data?.error === 'invalid_grant') {
+            await deleteAccessTokenInDatabase(userYouTubeInfoId, session)
+        }
+
         return {
             success: false,
             credentials: null,

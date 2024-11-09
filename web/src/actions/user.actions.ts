@@ -45,6 +45,31 @@ export async function updateAccessTokenInDatabase(userYouTubeInfoId: string, acc
     }
 }
 
+export async function deleteAccessTokenInDatabase(userYouTubeInfoId: string, session?: string) {
+
+    try {
+        const { databases } = await createSessionClient(session);
+
+        await databases.deleteDocument(
+            process.env.APPWRITE_DATABASE_ID!,
+            process.env.APPWRITE_COLLECTION_YOUTUBE_ID!,
+            userYouTubeInfoId,
+        );
+
+        return {
+            success: true,
+        };
+
+    } catch (error) {
+        console.error("Error deleting tokens in database:", error);
+
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : "An unknown error occurred",
+        };
+    }
+}
+
 export async function assignToolAccess(label: string, userId: string) {
 
     try {
