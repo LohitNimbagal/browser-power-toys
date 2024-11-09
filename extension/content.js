@@ -1,10 +1,12 @@
 function addIconToVideos() {
-    
-    const videos = document.querySelectorAll("ytd-rich-item-renderer");
+
+    const videos = document.querySelectorAll("ytd-rich-grid-media,  ytd-compact-video-renderer");
     const url = 'https://browserpowertoys.xyz';
 
     videos.forEach((video) => {
+
         if (!video.querySelector(".youtube-icon-extension")) {
+
             const icon = document.createElement("img");
             const imageUrl = chrome.runtime.getURL("icons/bookmark.svg");
             icon.src = imageUrl;
@@ -60,8 +62,6 @@ function addIconToVideos() {
                         });
 
                         const data = await apiResponse.json();
-
-                        console.log(data);
 
                         if (apiResponse.ok) {
                             console.log('Video added successfully to Playlist:', data.savedVideoInfo.addedToPlaylist);
